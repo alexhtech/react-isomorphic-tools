@@ -3,12 +3,12 @@ import Immutable from 'immutable'
 import {start, finish, error, push} from '../actions/preload'
 import {fetcher, fetchToState} from '../lib/Fetcher'
 
-const loadData = async({getState, dispatch}, {components, routes, params, location, router, ...props}) => {
+const loadData = async({getState, dispatch}, {components, routes, params, location:{query}, location, router, ...props}) => {
     components = getComponents(components).filter((item)=> {
         return !isLoaded(item.displayName, {
             getState,
             params,
-            location
+            query
         })
     })
     if (components.length) {
@@ -30,7 +30,7 @@ const loadData = async({getState, dispatch}, {components, routes, params, locati
                     dispatch(push({
                         displayName: component.displayName,
                         params,
-                        location
+                        query
                     }))
                 }
             }
@@ -43,13 +43,13 @@ const loadData = async({getState, dispatch}, {components, routes, params, locati
 }
 
 
-const isLoaded = (displayName, {getState, params, location}) => {
+const isLoaded = (displayName, {getState, params, query}) => {
     const state = getState()
     const {preload} = Immutable.Map.isMap(state) ? state.toJS() : state
 
     return preload.components.findIndex((item)=> {
             if (item.name == displayName) {
-                return lodash.isEqual(item.params, params) && lodash.isEqual(location.query, item.location.query)
+                return lodash.isEqual(item.params, params) && lodash.isEqual(query, item.query)
             }
         }) != -1
 }

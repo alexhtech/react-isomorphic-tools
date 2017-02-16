@@ -2,9 +2,9 @@ import {getTokenPrefix, isAuthenticated, getToken, getRefreshToken, logout, setT
 import 'isomorphic-fetch'
 import 'es6-promise'
 
-let BASE_URL
+let BaseUrl
 
-const fetcher = async(url, {params, type = null, base_url = BASE_URL, method = 'GET'} = {}) => {
+const fetcher = async(url, {params, type = null, baseUrl = BaseUrl, method = 'GET'} = {}) => {
     let headers_data = {}
     let body = {}
 
@@ -43,13 +43,13 @@ const fetcher = async(url, {params, type = null, base_url = BASE_URL, method = '
     }
 
     try {
-        const data = await fetch(`${base_url}${url}`, {method: method, headers: headers, body: body, mode: 'cors'})
+        const data = await fetch(`${baseUrl}${url}`, {method: method, headers: headers, body: body, mode: 'cors'})
         if (data.status >= 400) {
             const error = await data.json()
             if (data.status == 401 && isAuthenticated()) {
                 const refreshToken = getRefreshToken()
                 if (refreshToken) {
-                    const refresh = await fetch(`${base_url}/token/refresh`, {
+                    const refresh = await fetch(`${baseUrl}/token/refresh`, {
                         method: 'POST',
                         body: JSON.stringify({refreshToken: refreshToken})
                     })
@@ -58,7 +58,7 @@ const fetcher = async(url, {params, type = null, base_url = BASE_URL, method = '
                     if (refresh.status == 401) {
                         logout()
                         headers.delete('Authorization')
-                        const data = await fetch(`${base_url}${url}`, {
+                        const data = await fetch(`${baseUrl}${url}`, {
                             method: method,
                             headers: headers,
                             body: body,
@@ -73,7 +73,7 @@ const fetcher = async(url, {params, type = null, base_url = BASE_URL, method = '
                         setToken(token)
                         setRefreshToken(refreshToken)
                         headers.set('Authorization', `Bearer ${getToken()}`)
-                        const data = await fetch(`${base_url}${url}`, {
+                        const data = await fetch(`${baseUrl}${url}`, {
                             method: method,
                             headers: headers,
                             body: body,
@@ -85,7 +85,7 @@ const fetcher = async(url, {params, type = null, base_url = BASE_URL, method = '
                 else {
                     logout()
                     headers.delete('Authorization')
-                    const data = await fetch(`${base_url}${url}`, {
+                    const data = await fetch(`${baseUrl}${url}`, {
                         method: method,
                         headers: headers,
                         body: body,
@@ -103,7 +103,7 @@ const fetcher = async(url, {params, type = null, base_url = BASE_URL, method = '
         return await data.json()
     }
     catch (e) {
-        console.warn(`apiCall [error] - ${method} ${base_url}${url} -`, e, `- params ${params}`)
+        console.warn(`apiCall [error] - ${method} ${baseUrl}${url} -`, e, `- params ${params}`)
         throw e
     }
 }
@@ -152,7 +152,7 @@ const fetchToState = (url, {key = 'undefinedKey', ...params}) => async(dispatch)
 }
 
 const setBaseUrl = (url) => {
-    BASE_URL = url
+    BaseUrl = url
 }
 
 export {fetcher, setBaseUrl, fetchToState}

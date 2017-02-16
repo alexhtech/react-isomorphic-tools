@@ -1,11 +1,8 @@
 {
-  "name": "react-security-fetcher",
-  "version": "0.3.13",
-  "description": "React+Redux Authorization&Fetcher",
+  "name": "react-isomorphic-tools",
+  "version": "1.0.12",
+  "description": "Authorization, Fetcher, Preload. Tools for ServerSide rendering",
   "main": "lib/index.js",
-  "dependencies": {
-    "babel-preset-react": "^6.16.0"
-  },
   "devDependencies": {
     "react-cookie": "^1.0.4",
     "babel-cli": "^6.18.0",
@@ -15,20 +12,20 @@
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-polyfill": "^6.16.0",
     "babel-preset-es2015": "^6.18.0",
-    "babel-preset-stage-0": "^6.16.0"
+    "babel-preset-stage-0": "^6.16.0",
+    "babel-preset-react": "^6.16.0"
   },
   "scripts": {
     "prepublish": "node_modules/babel-cli/bin/babel.js src --out-dir ./"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aleksdp/react-security-fetcher.git"
+    "url": "git+https://github.com/aleksdp/react-isomorphic-tools.git"
   },
-  "module": "src/index.js",
   "author": "aleksdp",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/aleksdp/react-security-fetcher/issues"
+    "url": "https://github.com/aleksdp/react-isomorphic-tools/issues"
   },
-  "homepage": "https://github.com/aleksdp/react-security-fetcher#readme"
+  "homepage": "https://github.com/aleksdp/react-isomorphic-tools#readme"
 }

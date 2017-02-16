@@ -1,10 +1,10 @@
-const push = ({displayName, params, location}) => dispatch => {
+const push = ({displayName, params, query}) => dispatch => {
     dispatch({
         type: '@@preload/push',
         meta: {
             name: displayName,
             params,
-            location
+            query
         }
     })
 }

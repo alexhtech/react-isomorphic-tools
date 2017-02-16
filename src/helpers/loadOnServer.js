@@ -1,9 +1,12 @@
 import {push, start, finish, error} from '../actions/preload'
 import {getComponents} from '../helpers/preload'
-import {fetcher, fetchToState} from '../lib/Fetcher'
+import {fetcher, fetchToState, setBaseUrl} from '../lib/Fetcher'
 
 
-export default async({store:{getState, dispatch}, renderProps:{components, routes, params, location, router, ...props}})=> {
+export default async({store:{getState, dispatch}, renderProps, baseUrl})=> {
+    setBaseUrl(baseUrl)
+    if(!renderProps) return;
+    let {components, routes, params, location, router, ...props} = renderProps
     components = getComponents(components)
     if (components.length) {
         try {
@@ -23,7 +26,7 @@ export default async({store:{getState, dispatch}, renderProps:{components, route
                     dispatch(push({
                         displayName: components[i].displayName,
                         params,
-                        location
+                        query: location.query
                     }))
                 }
             }
