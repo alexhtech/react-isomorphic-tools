@@ -118,8 +118,9 @@ const fetchToState = (url, {key = 'undefinedKey', ...params}) => async(dispatch)
             payload: {
                 response: null,
                 request: {
-                    url,
-                    params
+                    ...params,
+                    url
+
                 }
             }
         })
@@ -131,8 +132,8 @@ const fetchToState = (url, {key = 'undefinedKey', ...params}) => async(dispatch)
             payload: {
                 response: await fetcher(url, params),
                 request: {
-                    url,
-                    params
+                    ...params,
+                    url
                 }
             }
         })
