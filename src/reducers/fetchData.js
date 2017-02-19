@@ -39,15 +39,14 @@ const fetchData = (state = {}, action) => {
 const ImmutableFetchData = (state = Immutable.fromJS({}), action) => {
     switch (action.type) {
         case '@FETCH_DATA/REQUEST':
-            return state.set(action.meta.key, {
-                _request: Immutable.Map(action.payload.request),
+            return state.mergeIn([action.meta.key], Immutable.fromJS({
+                _request: action.payload.request,
                 isFetching: true,
                 isFetched: false,
                 error: false
-            })
+            }))
 
         case '@FETCH_DATA/SUCCESS':
-
             return state.set(action.meta.key, Immutable.fromJS({
                 ...action.payload,
                 isFetched: true,
@@ -56,7 +55,6 @@ const ImmutableFetchData = (state = Immutable.fromJS({}), action) => {
             }))
 
         case '@FETCH_DATA/ERROR':
-
             return state.set(action.meta.key, {
                 error: action.payload.error,
                 isFetching: false,

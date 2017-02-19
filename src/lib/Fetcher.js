@@ -108,7 +108,7 @@ const fetcher = async(url, {params, type = null, baseUrl = BaseUrl, method = 'GE
     }
 }
 
-const fetchToState = (url, {key = 'undefinedKey', ...params}) => async(dispatch) => {
+const fetchToState = (url, {key = 'undefinedKey', params, ...rest}) => async(dispatch) => {
     try {
         dispatch({
             type: '@FETCH_DATA/REQUEST',
@@ -118,7 +118,8 @@ const fetchToState = (url, {key = 'undefinedKey', ...params}) => async(dispatch)
             payload: {
                 response: null,
                 request: {
-                    ...params,
+                    ...rest,
+                    params,
                     url
 
                 }
@@ -130,9 +131,10 @@ const fetchToState = (url, {key = 'undefinedKey', ...params}) => async(dispatch)
                 key
             },
             payload: {
-                response: await fetcher(url, params),
+                response: await fetcher(url, {...rest, params}),
                 request: {
-                    ...params,
+                    ...rest,
+                    params,
                     url
                 }
             }

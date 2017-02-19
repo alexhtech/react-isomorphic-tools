@@ -36,7 +36,7 @@ export default class AsyncLoader extends React.Component {
     }
 
 
-    componentWillReceiveProps = async(nextProps) => {
+    async componentWillReceiveProps(nextProps) {
         if (this.props.reloadOnPropsChange(this.props, nextProps)) {
             await loadData(this.context.store, nextProps)
             this.setState({

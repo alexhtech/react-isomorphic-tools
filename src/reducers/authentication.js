@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 
-export default function (state = Immutable.Map({}), action) {
-    switch (action.type){
+const ImmutableAuthentication = (state = Immutable.Map({}), action) => {
+    switch (action.type) {
         case 'LOGIN_SUCCESS':
             return state.set('user', Immutable.fromJS(action.payload))
         case 'LOGOUT_SUCCESS':
@@ -12,3 +12,5 @@ export default function (state = Immutable.Map({}), action) {
             return state
     }
 }
+
+export {ImmutableAuthentication}
