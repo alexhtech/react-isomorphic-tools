@@ -61,6 +61,9 @@ const ImmutableFetchData = (state = Immutable.fromJS({}), action) => {
                 isFetched: false,
             })
 
+        case '@FETCH_DATA/PUSH':
+            return state.setIn(action.meta.keys, state.getIn(action.meta.keys).push(...Immutable.fromJS(action.payload)))
+
         default:
             return state
     }
