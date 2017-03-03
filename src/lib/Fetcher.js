@@ -125,13 +125,14 @@ const fetchToState = (url, {key = 'undefinedKey', params, ...rest}) => async(dis
                 }
             }
         })
+        const response = await fetcher(url, {...rest, params})
         dispatch({
             type: '@FETCH_DATA/SUCCESS',
             meta: {
                 key
             },
             payload: {
-                response: await fetcher(url, {...rest, params}),
+                response: response,
                 request: {
                     ...rest,
                     params,

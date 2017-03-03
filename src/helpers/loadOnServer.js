@@ -1,11 +1,10 @@
 import {push, start, finish, error} from '../actions/preload'
 import {getComponents} from '../helpers/preload'
-import {fetcher, fetchToState, setBaseUrl} from '../lib/Fetcher'
+import {fetcher, fetchToState} from 'react-isomorphic-tools'
 
 
-export default async({store:{getState, dispatch}, renderProps, baseUrl})=> {
-    setBaseUrl(baseUrl)
-    if(!renderProps) return;
+export default async({store:{getState, dispatch}, renderProps})=> {
+    if (!renderProps) return;
     let {components, routes, params, location, router, ...props} = renderProps
     components = getComponents(components)
     if (components.length) {
@@ -33,6 +32,7 @@ export default async({store:{getState, dispatch}, renderProps, baseUrl})=> {
             dispatch(finish())
         }
         catch (e) {
+            console.log('error', e)
             dispatch(error(e))
         }
     }

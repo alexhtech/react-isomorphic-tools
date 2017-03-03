@@ -1,7 +1,7 @@
 import lodash from 'lodash'
 import Immutable from 'immutable'
 import {start, finish, error, push} from '../actions/preload'
-import {fetcher, fetchToState} from '../lib/Fetcher'
+import {fetcher, fetchToState} from 'react-isomorphic-tools'
 
 const loadData = async({getState, dispatch}, {components, routes, params, location:{query}, location, router, ...props}) => {
     components = getComponents(components).filter((item)=> {
