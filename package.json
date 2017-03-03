@@ -20,7 +20,8 @@
     "es6-promise": "^4.0.5",
     "react-router": "^3.0.2",
     "react": "^15.4.2",
-    "react-display-name": "^0.2.0"
+    "react-display-name": "^0.2.0",
+    "immutable": "^3.8.1"
   },
   "scripts": {
     "prepublish": "node_modules/babel-cli/bin/babel.js src --out-dir ./"
