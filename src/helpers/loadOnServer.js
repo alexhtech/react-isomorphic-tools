@@ -9,7 +9,9 @@ export default async({store:{getState, dispatch}, renderProps})=> {
     if (!renderProps) return;
     let {components, routes, params, location, router, ...props} = renderProps
     components = getComponents(components)
-    if(initPreload && typeof (initPreload) == 'function') components.unshift(initPreload)
+    if(initPreload && typeof (initPreload) == 'function') components.unshift({
+        preload: initPreload
+    })
     if (components.length) {
         try {
             dispatch(start())
