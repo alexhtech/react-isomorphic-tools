@@ -3,10 +3,13 @@ import {getComponents} from '../helpers/preload'
 import {fetcher, fetchToState} from 'react-isomorphic-tools'
 
 
+let initPreload
+
 export default async({store:{getState, dispatch}, renderProps})=> {
     if (!renderProps) return;
     let {components, routes, params, location, router, ...props} = renderProps
     components = getComponents(components)
+    if(initPreload && typeof (initPreload) == 'function' && typeof (initPreload.then) == 'function') components.unshift(initPreload)
     if (components.length) {
         try {
             dispatch(start())
@@ -37,3 +40,9 @@ export default async({store:{getState, dispatch}, renderProps})=> {
         }
     }
 }
+
+function setInitPreload(preload) {
+    initPreload = preload
+}
+
+export {setInitPreload}
