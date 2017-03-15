@@ -5,7 +5,7 @@ import {fetcher, fetchToState} from 'react-isomorphic-tools'
 
 const loadData = async({getState, dispatch}, {components, routes, params, location:{query}, location, router, ...props}) => {
     components = getComponents(components).filter((item)=> {
-        return !isLoaded(item.displayName, {
+        return !isLoaded(item, {
             getState,
             params,
             query
@@ -43,13 +43,15 @@ const loadData = async({getState, dispatch}, {components, routes, params, locati
 }
 
 
-const isLoaded = (displayName, {getState, params, query}) => {
+const isLoaded = ({displayName, preloadOptions}, {getState, params, query}) => {
     const state = getState()
     const {preload} = Immutable.Map.isMap(state) ? state.toJS() : state
+    const {alwaysReload = false, reloadOnQueryChange = true, reloadOnParamsChange = true} = preloadOptions
 
     return preload.components.findIndex((item)=> {
             if (item.name == displayName) {
-                return lodash.isEqual(item.params, params) && lodash.isEqual(query, item.query)
+                if (alwaysReload) return false
+                return (reloadOnParamsChange ? lodash.isEqual(item.params, params) : true) && (reloadOnQueryChange ? lodash.isEqual(query, item.query) : true)
             }
         }) != -1
 }
