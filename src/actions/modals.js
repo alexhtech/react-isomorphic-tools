@@ -12,5 +12,10 @@ const close = (name) => dispatch => {
     })
 }
 
+const closeAll = () => dispatch => {
+    dispatch({
+        type: '@@modals/closeAll'
+    })
+}
 
-export {open as openModal, close as closeModal}
+export {open as openModal, close as closeModal, closeAll as closeAllModals}
