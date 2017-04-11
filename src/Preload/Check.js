@@ -3,12 +3,12 @@ import {isAuthenticated} from '../lib/Auth'
 
 const Check = ({roles = [], denyRoles = [], cb, anon = false}) => (Component) => {
     return onEnter(async({getState, redirect}) => {
-        const user = getState().getIn(['authentication', 'user'])
+        const user = getState().getIn(['authentication', 'user', 'roles'])
         if (isAuthenticated() && user) {
             let hasRole = false
-            let roles = user.get('roles').toJS()
-            for (let i in roles) {
-                let role = roles[i]
+            let userRoles = user.get('roles').toJS()
+            for (let i in userRoles) {
+                let role = userRoles[i]
                 for (let i in denyRoles) {
                     if (denyRoles.hasOwnProperty(i) && role == denyRoles[i]) {
                         cb ? await cb({getState, redirect}) : redirect('/')
