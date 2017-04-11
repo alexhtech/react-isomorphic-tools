@@ -3,7 +3,7 @@ import {isAuthenticated} from '../lib/Auth'
 
 const Check = ({roles = [], denyRoles = [], cb, anon = false}) => (Component) => {
     return onEnter(async({getState, redirect}) => {
-        const user = getState().getIn(['authentication', 'user', 'roles'])
+        const user = getState().getIn(['authentication', 'user'])
         if (isAuthenticated() && user) {
             let hasRole = false
             let userRoles = user.get('roles').toJS()
