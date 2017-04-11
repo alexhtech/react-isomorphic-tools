@@ -1,4 +1,5 @@
-export {preload} from '../Preload'
+export {preload, onEnter} from '../Preload'
+export {Check} from '../Preload/Check'
 export {fetcher, setBaseUrl, fetchToState} from './Fetcher'
 export * as Auth from './Auth'
 export AsyncLoader from '../Preload/AsyncLoader'

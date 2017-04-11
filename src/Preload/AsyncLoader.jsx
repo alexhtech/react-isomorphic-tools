@@ -1,6 +1,7 @@
 import React from 'react'
 import RouterContext from 'react-router/lib/RouterContext'
 import {loadData} from '../helpers/preload'
+import {error} from '../actions/preload'
 
 export default class AsyncLoader extends React.Component {
     constructor(props, context) {
@@ -36,12 +37,16 @@ export default class AsyncLoader extends React.Component {
     }
 
 
-    async componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) {
         if (this.props.reloadOnPropsChange(this.props, nextProps)) {
-            await loadData(this.context.store, nextProps)
-            this.setState({
-                props: nextProps
+            loadData(this.context.store, nextProps).then(()=> {
+                this.setState({
+                    props: nextProps
+                })
+            }).catch((e)=>{
+                this.context.store.dispatch(error(e))
             })
+
         }
     }
 

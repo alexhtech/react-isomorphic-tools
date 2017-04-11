@@ -11,5 +11,14 @@ const preload = (preload, options = {}) => Component => class Preload extends Re
     }
 }
 
+const onEnter = (onEnter) => Component => class OnEnter extends React.Component {
+    static displayName = `OnEnter(${getDisplayName(Component)})`
+    static onEnter = onEnter
 
-export {preload}
+    render() {
+        return <Component {...this.props}/>
+    }
+}
+
+
+export {preload, onEnter}
