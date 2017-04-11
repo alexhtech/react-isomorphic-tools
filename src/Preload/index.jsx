@@ -1,23 +1,20 @@
 import React from 'react'
 import getDisplayName from 'react-display-name'
 
-const preload = (preload, options = {}) => Component => class Preload extends React.Component {
-    static displayName = `Preload(${getDisplayName(Component)})`
-    static preload = preload
-    static preloadOptions = options
+const preload = (preload, options = {}) => Component => {
+    Component.displayName = `Preload(${getDisplayName(Component)})`
+    Component.preload = preload
+    Component.preloadOptions = options
 
-    render() {
-        return <Component {...this.props}/>
-    }
+    return Component
 }
 
-const onEnter = (onEnter) => Component => class OnEnter extends React.Component {
-    static displayName = `OnEnter(${getDisplayName(Component)})`
-    static onEnter = onEnter
 
-    render() {
-        return <Component {...this.props}/>
-    }
+const onEnter = (onEnter) => Component => {
+    Component.displayName = `OnEnter(${getDisplayName(Component)})`
+    Component.onEnter = onEnter
+
+    return Component
 }
 
 
