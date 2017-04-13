@@ -1,4 +1,4 @@
-import {push, start, finish, error} from '../actions/preload'
+import {push, start, finish} from '../actions/preload'
 import {getComponents} from '../helpers/preload'
 import {fetcher, fetchToState} from 'react-isomorphic-tools'
 
@@ -33,16 +33,18 @@ export default async({store:{getState, dispatch}, renderProps})=> {
                         }
                     }, props)
                 }
-                await component.preload({
-                    getState,
-                    dispatch,
-                    routes,
-                    params,
-                    location,
-                    router,
-                    fetcher,
-                    fetchToState: (url, params)=>dispatch(fetchToState(url, params))
-                }, props)
+                if(component.hasOwnProperty('preload')){
+                    await component.preload({
+                        getState,
+                        dispatch,
+                        routes,
+                        params,
+                        location,
+                        router,
+                        fetcher,
+                        fetchToState: (url, params)=>dispatch(fetchToState(url, params))
+                    }, props)
+                }
                 dispatch(push({
                     displayName: components[i].displayName,
                     params,
