@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import RouterContext from 'react-router/lib/RouterContext'
 import {loadData} from '../helpers/preload'
 import {error} from '../actions/preload'
@@ -24,7 +25,7 @@ export default class AsyncLoader extends React.Component {
     }
 
     static contextTypes = {
-        store: React.PropTypes.object.isRequired,
+        store: PropTypes.object.isRequired,
     }
 
     componentDidMount = () => {
