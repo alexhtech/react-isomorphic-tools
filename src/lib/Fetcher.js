@@ -13,11 +13,18 @@ const fetcher = async(url, {params, type = null, baseUrl = BaseUrl, method = 'GE
         let query = ''
         for (let name in params) {
             if (params.hasOwnProperty(name)) {
-                if (!params[name]) {
-                    continue;
+                if (typeof (params[name]) == 'object') {
+                    const values = params[name]
+                    for (let value in values) {
+                        if (values.hasOwnProperty(value)) {
+                            query += `${i > 0 ? '&' : '?'}${name}=${values[value]}`
+                            i++
+                        }
+                    }
+                } else if (typeof (params[name] == 'number' || typeof (params[name]) == 'string')) {
+                    query += `${i > 0 ? '&' : '?'}${name}=${params[name]}`
+                    i++
                 }
-                query += `${i > 0 ? '&' : '?'}${name}=${params[name]}`
-                i++
             }
         }
         url += query
