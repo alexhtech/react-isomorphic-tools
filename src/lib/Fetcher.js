@@ -9,7 +9,7 @@ const fetcher = async(url, {params, type = null, baseUrl = BaseUrl, method = 'GE
     let body = {}
 
     const normalizeParams = (data) => {
-        if(typeof (data) == 'object') return JSON.stringify(data)
+        if (typeof (data) == 'object' && (method == 'GET' || method == 'DELETE')) return JSON.stringify(data)
         return data
     }
 
