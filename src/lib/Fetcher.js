@@ -8,6 +8,11 @@ const fetcher = async(url, {params, type = null, baseUrl = BaseUrl, method = 'GE
     let headers_data = {}
     let body = {}
 
+    const normalizeParams = (data) => {
+        if(typeof (data) == 'object') return JSON.stringify(data)
+        return data
+    }
+
     if (method == 'GET' || method == 'DELETE') {
         let i = 0
         let query = ''
@@ -17,12 +22,12 @@ const fetcher = async(url, {params, type = null, baseUrl = BaseUrl, method = 'GE
                     const values = params[name]
                     for (let value in values) {
                         if (values.hasOwnProperty(value)) {
-                            query += `${i > 0 ? '&' : '?'}${name}=${values[value]}`
+                            query += `${i > 0 ? '&' : '?'}${name}=${normalizeParams(values[value])}`
                             i++
                         }
                     }
                 } else if (typeof (params[name] == 'number' || typeof (params[name]) == 'string')) {
-                    query += `${i > 0 ? '&' : '?'}${name}=${params[name]}`
+                    query += `${i > 0 ? '&' : '?'}${name}=${normalizeParams(params[name])}`
                     i++
                 }
             }
