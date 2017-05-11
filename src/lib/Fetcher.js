@@ -29,7 +29,7 @@ const fetcher = async(url, {params, type = null, baseUrl = BaseUrl, method = 'GE
                             }
                         }
                     }else{
-                        query += `${i > 0 ? '&' : '?'}${name}=${normalizeParams(values[value])}`
+                        query += `${i > 0 ? '&' : '?'}${name}=${normalizeParams(values)}`
                         i++
                     }
 
