@@ -20,14 +20,22 @@ const fetcher = async(url, {params, type = null, baseUrl = BaseUrl, method = 'GE
             if (params.hasOwnProperty(name)) {
                 if (typeof (params[name]) == 'object') {
                     const values = params[name]
-                    for (let value in values) {
-                        if (values.hasOwnProperty(value)) {
-                            query += `${i > 0 ? '&' : '?'}${name}=${normalizeParams(values[value])}`
-                            i++
+
+                    if (Array.isArray(values)) {
+                        for (let value in values) {
+                            if (values.hasOwnProperty(value)) {
+                                query += `${i > 0 ? '&' : '?'}${name}=${normalizeParams(values[value])}`
+                                i++
+                            }
                         }
+                    }else{
+                        query += `${i > 0 ? '&' : '?'}${name}=${normalizeParams(values[value])}`
+                        i++
                     }
+
+
                 } else if (typeof (params[name] == 'number' || typeof (params[name]) == 'string')) {
-                    query += `${i > 0 ? '&' : '?'}${name}=${normalizeParams(params[name])}`
+                    query += `${i > 0 ? '&' : '?'}${name}=${params[name]}`
                     i++
                 }
             }
