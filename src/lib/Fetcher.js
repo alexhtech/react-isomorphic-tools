@@ -128,7 +128,7 @@ const fetcher = async(url, {params, type = null, baseUrl = BaseUrl, method = 'GE
     }
 }
 
-const fetchToState = (url, {key = 'undefinedKey', params, ...rest}) => async(dispatch) => {
+const fetchToState = (url, {key = 'undefinedKey', params = {}, ...rest}) => async(dispatch) => {
     try {
         dispatch({
             type: '@FETCH_DATA/REQUEST',
