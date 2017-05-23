@@ -6,6 +6,7 @@ const setLocale = (locale) => dispatch => {
         payload: locale
     })
     cookie.save('locale', locale)
+    typeof (location) == 'object' && location.reload()
 }
 
 const setUserAgent = userAgent => dispatch => {
