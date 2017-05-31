@@ -28,13 +28,13 @@ const fetcher = async(url, {params, type = null, baseUrl = BaseUrl, method = 'GE
                                 i++
                             }
                         }
-                    }else{
+                    } else {
                         query += `${i > 0 ? '&' : '?'}${name}=${normalizeParams(values)}`
                         i++
                     }
 
 
-                } else if (typeof (params[name] == 'number' || typeof (params[name]) == 'string')) {
+                } else if (typeof (params[name] == 'number' || typeof (params[name]) == 'string')) { // eslint-disable-line
                     query += `${i > 0 ? '&' : '?'}${name}=${params[name]}`
                     i++
                 }
@@ -65,7 +65,12 @@ const fetcher = async(url, {params, type = null, baseUrl = BaseUrl, method = 'GE
     try {
         const data = await fetch(`${baseUrl}${url}`, {method: method, headers: headers, body: body, mode: 'cors'})
         if (data.status >= 400) {
-            const error = await data.json()
+            let error
+            if (data.headers.get('content-type').indexOf((item)=>item == 'application/json') != -1) {
+                error = await data.json()
+            } else {
+                error = await data.text()
+            }
             if (data.status == 401 && isAuthenticated()) {
                 const refreshToken = getRefreshToken()
                 if (refreshToken) {
@@ -123,8 +128,16 @@ const fetcher = async(url, {params, type = null, baseUrl = BaseUrl, method = 'GE
         return await data.json()
     }
     catch (e) {
-        console.warn(`apiCall [error] - ${method} ${baseUrl}${url} -`, e, `- params ${params}`)
-        throw e
+        throw {
+            type: 'notAvailableResource',
+            params:{
+                method,
+                baseUrl,
+                url,
+                params,
+                message: e
+            }
+        }
     }
 }
 

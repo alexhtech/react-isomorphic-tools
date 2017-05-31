@@ -1,4 +1,4 @@
-import {replace} from "react-router-redux"
+import {replace} from 'react-router-redux'
 
 let lock = false
 export default store => next => action => {
@@ -16,8 +16,16 @@ export default store => next => action => {
         case '@@preload/error': {
             lock = false
             if (action.payload.code == 303) {
-                store.dispatch(replace(action.payload.location))
+                const {to, e, location} = action.payload
                 next(action)
+                store.dispatch(replace(to == '/error' ? {
+                    pathname: to, query: {
+                        errorData: JSON.stringify({
+                            location,
+                            e
+                        })
+                    }
+                } : to))
             }
         }
             break

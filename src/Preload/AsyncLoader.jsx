@@ -44,10 +44,7 @@ export default class AsyncLoader extends React.Component {
                 this.setState({
                     props: nextProps
                 })
-            }).catch((e)=>{
-                this.context.store.dispatch(error(e))
             })
-
         }
     }
 

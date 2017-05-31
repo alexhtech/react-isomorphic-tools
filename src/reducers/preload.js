@@ -31,6 +31,9 @@ export const ImmutablePreloadReducer = (state = Immutable.fromJS({components: []
                 return state.set('components', state.get('components').push(Immutable.Map(action.meta)))
             }
         }
+        case '@@preload/parseError': {
+            return state.set('error', JSON.parse(action.payload))
+        }
         default:
             return state
     }

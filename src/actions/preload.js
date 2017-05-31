@@ -21,11 +21,21 @@ const finish = () => dispatch => {
     })
 }
 
-const error = (e) => dispatch => {
+const error = ({code = 303, to = '/error', ...rest}, location) => dispatch => {
     dispatch({
         type: '@@preload/error',
-        payload: e
+        payload: {
+            code,
+            to,
+            location,
+            e: rest
+        }
     })
 }
 
-export {push, start, finish, error}
+export {
+    push,
+    start,
+    finish,
+    error
+}

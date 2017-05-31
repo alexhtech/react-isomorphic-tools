@@ -1,7 +1,7 @@
 import lodash from 'lodash'
 import Immutable from 'immutable'
-import {start, finish, push} from '../actions/preload'
-import {fetcher, fetchToState} from 'react-isomorphic-tools'
+import {start, finish, push, error} from '../actions/preload'
+import {fetcher, fetchToState} from '../lib/Fetcher'
 
 const loadData = async({getState, dispatch}, {components, routes, params, location:{query}, location, router, ...props}) => {
     components = getComponents(components).filter((item)=> {
@@ -12,6 +12,7 @@ const loadData = async({getState, dispatch}, {components, routes, params, locati
         }) : true
     })
     if (components.length) {
+        try {
             dispatch(start())
             for (let i in components) {
                 if (components.hasOwnProperty(i)) {
@@ -27,12 +28,12 @@ const loadData = async({getState, dispatch}, {components, routes, params, locati
                             redirect: (props)=> {
                                 throw {
                                     code: 303,
-                                    location: props
+                                    to: props
                                 }
                             }
                         }, props)
                     }
-                    if(component.hasOwnProperty('preload')){
+                    if (component.hasOwnProperty('preload')) {
                         await component.preload({
                             getState,
                             dispatch,
@@ -52,6 +53,11 @@ const loadData = async({getState, dispatch}, {components, routes, params, locati
                 }
             }
             dispatch(finish())
+        }
+        catch (e){
+            dispatch(error(e, location))
+        }
+
     }
 }
 

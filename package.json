@@ -1,6 +1,6 @@
 {
   "name": "react-isomorphic-tools",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "Authorization, Fetcher, Preload. Tools for ServerSide rendering",
   "main": "lib/index.js",
   "devDependencies": {
@@ -22,7 +22,8 @@
     "react-cookie": "^1.0.4",
     "react-display-name": "^0.2.0",
     "react-router": "^3.0.2",
-    "react-router-redux": "^4.0.7"
+    "react-router-redux": "^4.0.7",
+    "styled-components": "^2.0.0"
   },
   "scripts": {
     "prepublish": "node_modules/babel-cli/bin/babel.js src --out-dir ./"
@@ -38,6 +39,8 @@
   },
   "homepage": "https://github.com/aleksdp/react-isomorphic-tools#readme",
   "dependencies": {
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "is-json": "^2.0.1",
+    "react-json-pretty": "^1.6.3"
   }
 }

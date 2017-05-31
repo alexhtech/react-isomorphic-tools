@@ -1,4 +1,3 @@
-import React from 'react'
 import getDisplayName from 'react-display-name'
 
 const preload = (preload, options = {}) => Component => {
