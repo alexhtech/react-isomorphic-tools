@@ -20,7 +20,6 @@ const fetcher = async(url, {params, type = null, baseUrl = BaseUrl, method = 'GE
             if (params.hasOwnProperty(name)) {
                 if (typeof (params[name]) == 'object') {
                     const values = params[name]
-
                     if (Array.isArray(values)) {
                         for (let value in values) {
                             if (values.hasOwnProperty(value)) {
@@ -34,7 +33,8 @@ const fetcher = async(url, {params, type = null, baseUrl = BaseUrl, method = 'GE
                     }
 
 
-                } else if (typeof (params[name] == 'number' || typeof (params[name]) == 'string')) { // eslint-disable-line
+                }
+                if ((typeof (params[name] == 'number' || typeof (params[name]) == 'string')) && params[name] != undefined) {
                     query += `${i > 0 ? '&' : '?'}${name}=${params[name]}`
                     i++
                 }
@@ -130,7 +130,7 @@ const fetcher = async(url, {params, type = null, baseUrl = BaseUrl, method = 'GE
     catch (e) {
         throw {
             type: 'notAvailableResource',
-            params:{
+            params: {
                 method,
                 baseUrl,
                 url,
