@@ -18,25 +18,27 @@ const fetcher = async(url, {params, type = null, baseUrl = BaseUrl, method = 'GE
         let query = ''
         for (let name in params) {
             if (params.hasOwnProperty(name)) {
-                if (typeof (params[name]) == 'object') {
-                    const values = params[name]
-                    if (Array.isArray(values)) {
-                        for (let value in values) {
-                            if (values.hasOwnProperty(value)) {
-                                query += `${i > 0 ? '&' : '?'}${name}=${normalizeParams(values[value])}`
-                                i++
+                switch (typeof params[name]) {
+                    case 'object':
+                        const values = params[name]
+                        if (Array.isArray(values)) {
+                            for (let value in values) {
+                                if (values.hasOwnProperty(value)) {
+                                    query += `${i > 0 ? '&' : '?'}${name}=${normalizeParams(values[value])}`
+                                    i++
+                                }
                             }
+                        } else {
+                            query += `${i > 0 ? '&' : '?'}${name}=${normalizeParams(values)}`
+                            i++
                         }
-                    } else {
-                        query += `${i > 0 ? '&' : '?'}${name}=${normalizeParams(values)}`
-                        i++
-                    }
-
-
-                }
-                if ((typeof (params[name] == 'number' || typeof (params[name]) == 'string')) && params[name] != undefined) {
-                    query += `${i > 0 ? '&' : '?'}${name}=${params[name]}`
-                    i++
+                        break;
+                    default:
+                        if (params[name] != undefined) {
+                            query += `${i > 0 ? '&' : '?'}${name}=${params[name]}`
+                            i++
+                        }
+                        break;
                 }
             }
         }
