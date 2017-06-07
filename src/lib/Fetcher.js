@@ -1,6 +1,7 @@
 import {getTokenPrefix, isAuthenticated, getToken, getRefreshToken, logout, setToken, setRefreshToken} from './Auth'
 import 'isomorphic-fetch'
 import 'es6-promise'
+import isJSON from 'is-json'
 
 let BaseUrl
 
@@ -136,9 +137,9 @@ const fetcher = async(url, {params, type = null, baseUrl = BaseUrl, method = 'GE
                 method,
                 baseUrl,
                 url,
-                params,
-                message: e
-            }
+                params
+            },
+            error: isJSON(e) ? JSON.parse(e) : e
         }
     }
 }
