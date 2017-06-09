@@ -20,7 +20,8 @@ const fetcher = async(url, {params, type = null, baseUrl = BaseUrl, method = 'GE
         for (let name in params) {
             if (params.hasOwnProperty(name)) {
                 switch (typeof params[name]) {
-                    case 'object':
+                    case 'object': {
+
                         const values = params[name]
                         if (Array.isArray(values)) {
                             for (let value in values) {
@@ -34,12 +35,14 @@ const fetcher = async(url, {params, type = null, baseUrl = BaseUrl, method = 'GE
                             i++
                         }
                         break;
-                    default:
+                    }
+                    default: {
                         if (params[name] != undefined) {
                             query += `${i > 0 ? '&' : '?'}${name}=${params[name]}`
                             i++
                         }
                         break;
+                    }
                 }
             }
         }
