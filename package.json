@@ -1,6 +1,6 @@
 {
   "name": "react-isomorphic-tools",
-  "version": "1.5.8",
+  "version": "1.5.9",
   "description": "Authorization, Fetcher, Preload. Tools for ServerSide rendering",
   "main": "lib/index.js",
   "devDependencies": {
@@ -39,8 +39,9 @@
   },
   "homepage": "https://github.com/aleksdp/react-isomorphic-tools#readme",
   "dependencies": {
-    "prop-types": "^15.5.8",
     "is-json": "^2.0.1",
+    "pretty-error": "^2.1.0",
+    "prop-types": "^15.5.8",
     "react-json-pretty": "^1.6.3"
   }
 }
