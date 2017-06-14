@@ -16,7 +16,15 @@ const setUserAgent = userAgent => dispatch => {
     })
 }
 
+const setHost = host => dispatch => {
+    dispatch({
+        type: 'navigator/SET_HOST',
+        payload: host
+    })
+}
+
 export {
     setLocale,
-    setUserAgent
+    setUserAgent,
+    setHost
 }

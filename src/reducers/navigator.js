@@ -6,6 +6,8 @@ const ImmutableNavigator = (state = Immutable.Map({}), action) =>{
             return state.set('userAgent', action.payload)
         case 'navigator/SET_LOCALE':
             return state.set('locale', action.payload)
+        case 'navigator/SET_HOST':
+            return state.set('host', action.payload)
         default:
             return state
     }
