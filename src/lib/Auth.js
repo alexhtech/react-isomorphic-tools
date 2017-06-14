@@ -4,8 +4,8 @@ let tokenName = 'token'
 let refreshTokenName = 'refreshToken'
 let tokenPrefix = 'Bearer '
 
-function setToken(token) {
-    cookie.save(tokenName, token)
+function setToken(token, options = {}) {
+    cookie.save(tokenName, token, options)
 }
 function setRefreshToken(refreshToken) {
     cookie.save(refreshTokenName, refreshToken)
