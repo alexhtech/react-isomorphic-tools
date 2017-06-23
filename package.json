@@ -1,6 +1,6 @@
 {
   "name": "react-isomorphic-tools",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Authorization, Fetcher, Preload. Tools for ServerSide rendering",
   "main": "lib/index.js",
   "devDependencies": {
@@ -21,7 +21,7 @@
     "react-router": "^4.1.1",
     "react-router-config": "^1.0.0-beta.3",
     "react-router-dom": "^4.1.1",
-    "react-router-redux": "next",
+    "react-router-redux": "^5.0.0-alpha.6",
     "styled-components": "^2.0.0"
   },
   "scripts": {
@@ -44,6 +44,7 @@
     "react-json-pretty": "^1.6.3",
     "query-string": "^4.3.4",
     "es6-promise": "^4.0.5",
-    "isomorphic-fetch": "^2.2.1"
+    "isomorphic-fetch": "^2.2.1",
+    "is-browser": "^2.0.1"
   }
 }
