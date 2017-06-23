@@ -1,10 +1,9 @@
-/.idea
+.idea
 /node_modules
 .DS_Store
 /actions
-/helpers
+/constants
 /lib
-/Preload
 /reducers
 /middlewares
 /pages
