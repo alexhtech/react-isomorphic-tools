@@ -1,6 +1,6 @@
 {
   "name": "react-isomorphic-tools",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Authorization, Fetcher, Preload. Tools for ServerSide rendering",
   "main": "lib/index.js",
   "devDependencies": {
@@ -45,6 +45,7 @@
     "query-string": "^4.3.4",
     "es6-promise": "^4.0.5",
     "isomorphic-fetch": "^2.2.1",
-    "is-browser": "^2.0.1"
+    "is-browser": "^2.0.1",
+    "serialize-javascript": "^1.3.0"
   }
 }
