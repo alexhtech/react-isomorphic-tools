@@ -3,7 +3,6 @@ import PrettyError from 'pretty-error'
 const pe = new PrettyError()
 
 const errorHandler = ({error, res, req}) => {
-    const {code, to, location, e} = error
     const errorTemplate = {
         method: req.method,
         url: req.url,
@@ -14,18 +13,27 @@ const errorHandler = ({error, res, req}) => {
         cookies: req.cookies
     }
 
-    if (code == 303) {
-        res.redirect(to == '/error' ? to + '?errorData=' + JSON.stringify({location, ...errorTemplate, e}) : to)
-    } else {
+    if (error.hasOwnProperty('type')) {
+        switch (error.type) {
+            case 'notAvailableResource': {
+                res.redirect('/error?errorData=' + JSON.stringify({...errorTemplate, error}))
+            }
+                break
+            case 'redirect': {
+                res.redirect(error.to)
+            }
+                break
+        }
+    }
+    else {
         console.log(pe.render(new Error(error)))
         res.redirect(`/error?errorData=${JSON.stringify({
             type: 'Failed to render',
             params: errorTemplate
         })}`)
     }
+
 }
 
 
-export {
-    errorHandler
-}
+export default errorHandler

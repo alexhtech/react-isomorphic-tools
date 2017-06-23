@@ -1685,6 +1685,15 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-isomorphic-tools@^1.5.9:
+  version "1.5.9"
+  resolved "https://registry.yarnpkg.com/react-isomorphic-tools/-/react-isomorphic-tools-1.5.9.tgz#393816c0c6016e86326360f52b93be597a94bb93"
+  dependencies:
+    is-json "^2.0.1"
+    pretty-error "^2.1.0"
+    prop-types "^15.5.8"
+    react-json-pretty "^1.6.3"
+
 react-json-pretty@^1.6.3:
   version "1.6.3"
   resolved "https://registry.yarnpkg.com/react-json-pretty/-/react-json-pretty-1.6.3.tgz#59b54ec687b434eb0011e8cf565ea2a9b6639589"

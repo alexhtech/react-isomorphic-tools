@@ -1,21 +1,27 @@
+import {MODALS_OPEN, MODALS_CLOSE, MODALS_CLOSE_ALL} from '../constants'
+
 const open = (name) => dispatch => {
     dispatch({
-        type: '@@modals/open',
+        type: MODALS_OPEN,
         meta: name
     })
 }
 
 const close = (name) => dispatch => {
     dispatch({
-        type: '@@modals/close',
+        type: MODALS_CLOSE,
         meta: name
     })
 }
 
 const closeAll = () => dispatch => {
     dispatch({
-        type: '@@modals/closeAll'
+        type: MODALS_CLOSE_ALL
     })
 }
 
-export {open as openModal, close as closeModal, closeAll as closeAllModals}
+export {
+    open,
+    close,
+    closeAll
+}

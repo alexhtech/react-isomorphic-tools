@@ -1,15 +1,16 @@
 import React from 'react'
 import isJSON from 'is-json'
+import queryString from 'query-string'
 import {connect} from 'react-redux'
 import styled from 'styled-components'
 import JSONPretty from 'react-json-pretty'
-import {Link} from 'react-router'
+import Link from '../lib/Link'
 
 
-@connect((state, props)=> {
-    const {errorData} = props.location.query
+@connect(state=> {
+    const {errorData} = queryString.parse(state.get('router').location.search)
     return {
-        error: isJSON(errorData) ? JSON.parse(errorData): {}
+        error: isJSON(errorData) ? JSON.parse(errorData) : {}
     }
 })
 export default class Error extends React.Component {

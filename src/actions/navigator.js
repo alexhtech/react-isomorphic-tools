@@ -1,8 +1,9 @@
 import cookie from 'react-cookie'
+import {NAVIGATOR_SET_LOCALE, NAVIGATOR_SET_USER_AGENT} from '../constants'
 
 const setLocale = (locale) => dispatch => {
     dispatch({
-        type: 'navigator/SET_LOCALE',
+        type: NAVIGATOR_SET_LOCALE,
         payload: locale
     })
     cookie.save('locale', locale)
@@ -11,7 +12,7 @@ const setLocale = (locale) => dispatch => {
 
 const setUserAgent = userAgent => dispatch => {
     dispatch({
-        type: 'navigator/SET_USER_AGENT',
+        type: NAVIGATOR_SET_USER_AGENT,
         payload: userAgent
     })
 }

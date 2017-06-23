@@ -15,14 +15,13 @@
     "babel-preset-stage-0": "^6.16.0"
   },
   "peerDependencies": {
-    "es6-promise": "^4.0.5",
     "immutable": "^3.8.1",
-    "isomorphic-fetch": "^2.2.1",
     "react": "^15.4.2",
     "react-cookie": "^1.0.4",
-    "react-display-name": "^0.2.0",
-    "react-router": "^3.0.2",
-    "react-router-redux": "^4.0.7",
+    "react-router": "^4.1.1",
+    "react-router-config": "^1.0.0-beta.3",
+    "react-router-dom": "^4.1.1",
+    "react-router-redux": "next",
     "styled-components": "^2.0.0"
   },
   "scripts": {
@@ -42,6 +41,9 @@
     "is-json": "^2.0.1",
     "pretty-error": "^2.1.0",
     "prop-types": "^15.5.8",
-    "react-json-pretty": "^1.6.3"
+    "react-json-pretty": "^1.6.3",
+    "query-string": "^4.3.4",
+    "es6-promise": "^4.0.5",
+    "isomorphic-fetch": "^2.2.1"
   }
 }
