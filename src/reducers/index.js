@@ -1,5 +1,3 @@
 export authentication from './authentication'
 export fetchData from './fetchData'
-export {preload as preloadReducer, ImmutablePreloadReducer} from './preload'
 export {ImmutableModals} from './modals'
-export {ImmutableRoutingReducer} from './routing'

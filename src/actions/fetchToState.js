@@ -4,16 +4,6 @@ import {
     FETCH_TO_STATE_FAIL
 } from '../constants'
 
-const pushToState = (payload, keys) => dispatch => {
-    dispatch({
-        type: '@FETCH_DATA/PUSH',
-        payload,
-        meta: {
-            keys
-        }
-    })
-}
-
 const request = ({key, request}) => dispatch => {
     dispatch({
         type: FETCH_TO_STATE_REQUEST,
@@ -27,14 +17,15 @@ const request = ({key, request}) => dispatch => {
     })
 }
 
-const success = ({key, response}) => dispatch => {
+const success = ({key, response, request}) => dispatch => {
     dispatch({
         type: FETCH_TO_STATE_SUCCESS,
         meta: {
             key
         },
         payload: {
-            response
+            response,
+            request
         }
     })
 }
@@ -52,7 +43,6 @@ const fail = ({key, e}) => dispatch => {
 }
 
 export {
-    pushToState,
     request,
     success,
     fail

@@ -7,8 +7,19 @@ class FetchToStateClass {
 
     fetchToState = (url, {key = 'undefinedKey', params = {}, ...rest}) => async(dispatch) => {
         try {
-            dispatch(request({key, request: {...rest, params, url}}))
-            dispatch(success({key, response: await this.Fetcher.fetcher(url, {...rest, params})}))
+            dispatch(request({
+                key,
+                request: {
+                    ...rest, params, url
+                }
+            }))
+            dispatch(success({
+                key,
+                response: await this.Fetcher.fetcher(url, {...rest, params}),
+                request: {
+                    ...rest, params, url
+                }
+            }))
         }
         catch (e) {
             dispatch(fail({key, e}))
