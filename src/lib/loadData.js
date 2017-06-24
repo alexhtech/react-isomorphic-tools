@@ -5,10 +5,11 @@ import {fetcher, fetchToState} from './'
 import {start, success} from '../actions/preload'
 
 
-const resolved = isBrowser ? window.__REACT_ISOMORPHIC_TOOLS_RESOLVED_ROUTES : []
+let resolved = isBrowser ? window.__REACT_ISOMORPHIC_TOOLS_RESOLVED_ROUTES : []
 
 
 const loadData = async({foundRoutes, store, location}) => {
+    if (!isBrowser) resolved = [] // always clear resolved array on the server
     const {getState, dispatch} = store
     let started = false
     for (let i in foundRoutes) {
