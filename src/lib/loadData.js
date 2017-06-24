@@ -1,5 +1,6 @@
 import lodash from 'lodash'
 import isBrowser from 'is-browser'
+import queryString from 'query-string'
 import {fetcher, fetchToState} from './'
 import {start, success} from '../actions/preload'
 
@@ -23,7 +24,7 @@ const loadData = async({foundRoutes, store, location}) => {
                         getState,
                         dispatch,
                         params,
-                        location,
+                        location: {...location, query: queryString.parse(location.search)},
                         fetcher,
                         fetchToState: (url, params)=>dispatch(fetchToState(url, params)),
                         redirect: (props)=> {
