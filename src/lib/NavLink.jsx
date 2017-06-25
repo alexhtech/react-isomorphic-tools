@@ -52,7 +52,7 @@ export default class NavLinkWrapper extends React.Component {
     }
 
     render() {
-        const {to:{query, ...to}, replace, exact, strict, location, activeClassName, className, activeStyle, style, isActive} = this.props
+        const {to:{query, ...to}, replace, exact, strict, location, activeClassName, className, activeStyle, style, isActive, children} = this.props
         return (
             <NavLink
                 onClick={this.handleClick}
@@ -66,7 +66,8 @@ export default class NavLinkWrapper extends React.Component {
                 activeStyle={activeStyle}
                 style={style}
                 isActive={isActive}
-            >{this.props.children}</NavLink>
+                children={children}
+            />
         )
     }
 }
