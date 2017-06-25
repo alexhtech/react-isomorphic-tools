@@ -3,6 +3,7 @@ import FetcherClass from './Fetcher/FetcherClass'
 import FetchToStateClass from './Fetcher/FetchToStateClass'
 import resolveRoutes from './resolveRoutes'
 import Link from './Link'
+import NavLink from './NavLink'
 import {open, close, closeAll} from '../actions/modals'
 import {setLocale, setUserAgent} from '../actions/navigator'
 import errorHandler from './errorHandler'
@@ -22,6 +23,7 @@ export {
     setBaseUrl,
     resolveRoutes,
     Link,
+    NavLink,
     open as openModal,
     close as closeModal,
     closeAll as closeAllModals,

@@ -1,5 +1,4 @@
 import {LOCATION_CHANGE, push} from 'react-router-redux'
-import queryString from 'query-string'
 import resolveRoutes from '../lib/resolveRoutes'
 import {PRELOAD_START, PRELOAD_SUCCESS, PRELOAD_FAIL} from '../constants'
 import {fail} from '../actions/preload'
