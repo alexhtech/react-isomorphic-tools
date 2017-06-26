@@ -53,10 +53,10 @@ export default class LinkWrapper extends React.Component {
 
 
     render() {
-        const {to:{query, ...to}, children} = this.props
+        const {to:{query, ...to}, children, style, className} = this.props
         return (
             <Link onClick={this.handleClick} to={{...to, search: query ? '?' + stringify(query) : undefined}}
-                  children={children}/>
+                  children={children} style={style} className={className}/>
         )
     }
 }
