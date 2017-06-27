@@ -1,17 +1,16 @@
-import Immutable from 'immutable'
 import {NAVIGATOR_SET_LOCALE, NAVIGATOR_SET_USER_AGENT} from '../constants'
 
-const ImmutableNavigator = (state = Immutable.Map({}), action) => {
+const navigator = (state = {}, action) => {
     switch (action.type) {
         case NAVIGATOR_SET_USER_AGENT:
-            return state.set('userAgent', action.payload)
+            return {...state, userAgent: action.payload}
         case NAVIGATOR_SET_LOCALE:
-            return state.set('locale', action.payload)
+            return {...state, locale: action.payload}
         default:
             return state
     }
 }
 
 export {
-    ImmutableNavigator
+    navigator
 }

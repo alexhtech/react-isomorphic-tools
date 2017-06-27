@@ -1,17 +1,18 @@
-import Immutable from 'immutable'
 import {MODALS_OPEN, MODALS_CLOSE, MODALS_CLOSE_ALL} from '../constants'
 
-const modals = (state = Immutable.Map({}), action)=> {
+const modals = (state = {}, action)=> {
     switch (action.type) {
         case MODALS_OPEN:
-            return state.set(action.meta, true)
+            return {...state, [action.meta]: true}
         case MODALS_CLOSE:
-            return state.set(action.meta, false)
+            return {...state, [action.meta]: false}
         case MODALS_CLOSE_ALL:
-            return Immutable.Map({})
+            return {}
         default:
             return state
     }
 }
 
-export {modals as ImmutableModals}
+export {
+    modals
+}

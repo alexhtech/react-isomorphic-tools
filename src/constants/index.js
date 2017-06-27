@@ -20,3 +20,9 @@ export const MODALS_CLOSE_ALL = '@@modals/closeAll'
 
 export const NAVIGATOR_SET_LOCALE = '@@navigator/setLocale'
 export const NAVIGATOR_SET_USER_AGENT = '@@navigator/setUserAgent'
+
+// Auth
+
+export const AUTH_LOGIN_SUCCESS = '@@authentication/loginSuccess'
+export const AUTH_LOGOUT_SUCCESS = '@@authentication/logoutSuccess'
+export const AUTH_ACCOUNT_SUCCESS = '@@authentication/accountSuccess'

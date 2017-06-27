@@ -1,16 +1,16 @@
-import Immutable from 'immutable'
+import {AUTH_ACCOUNT_SUCCESS, AUTH_LOGIN_SUCCESS, AUTH_LOGOUT_SUCCESS} from '../constants'
 
-const ImmutableAuthentication = (state = Immutable.Map({}), action) => {
+const authentication = (state = {}, action) => {
     switch (action.type) {
-        case 'LOGIN_SUCCESS':
-            return state.set('user', Immutable.fromJS(action.payload))
-        case 'LOGOUT_SUCCESS':
-            return state.set('user', null)
-        case 'ACCOUNT_SUCCESS':
-            return state.set('user', Immutable.fromJS(action.payload))
+        case AUTH_LOGIN_SUCCESS:
+            return {...state, user: action.payload}
+        case AUTH_LOGOUT_SUCCESS:
+            return {...state, user: null}
+        case AUTH_ACCOUNT_SUCCESS:
+            return {...state, user: action.payload}
         default:
             return state
     }
 }
 
-export {ImmutableAuthentication}
+export {authentication}
