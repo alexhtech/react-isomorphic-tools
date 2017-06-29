@@ -37,6 +37,7 @@ export default history => store => next => action => { // eslint-disable-line no
                 }).catch((e)=> {
                     store.dispatch(fail(e, history.location))
                 })
+                lock = false
             }
         }
             break
