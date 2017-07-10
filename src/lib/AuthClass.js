@@ -20,35 +20,33 @@ class AuthClass {
     // getters/setters
 
     setToken = (token, options = {}) => {
-        this.token = token
-        this.token ?
-            cookie.save(this.tokenName, this.token, options) :
-            cookie.remove(this.tokenName, options)
+        const remove = !!token;
+        remove ?
+            cookie.remove(this.tokenName, options) :
+            cookie.save(this.tokenName, this.token, options)
     }
 
     getToken = () => {
-        return this.token
+        return cookie.load(this.tokenName)
     }
 
     setRefreshToken = (refreshToken, options = {}) => {
-        this.refreshToken = refreshToken
-        this.refreshToken ?
-            cookie.save(this.refreshTokenName, this.refreshToken) :
-            cookie.remove(this.refreshTokenName, options)
+        const remove = !!refreshToken;
+        remove ?
+            cookie.remove(this.refreshTokenName, options) :
+            cookie.save(this.refreshTokenName, refreshToken)
     }
 
     getRefreshToken = () => {
-        return this.refreshToken
+        return cookie.load(this.refreshTokenName)
     }
 
     setTokenName = (tokenName) => {
         this.tokenName = tokenName
-        this.token = cookie.load(tokenName)
     }
 
     setRefreshTokenName = (refreshTokenName) => {
         this.refreshTokenName = refreshTokenName
-        this.refreshToken = cookie.load(refreshTokenName)
     }
 
     setTokenPrefix = (tokenPrefix) => {
