@@ -43,10 +43,12 @@ class AuthClass {
 
     setTokenName = (tokenName) => {
         this.tokenName = tokenName
+        this.token = cookie.load(tokenName)
     }
 
     setRefreshTokenName = (refreshTokenName) => {
         this.refreshTokenName = refreshTokenName
+        this.refreshToken = cookie.load(refreshTokenName)
     }
 
     setTokenPrefix = (tokenPrefix) => {
