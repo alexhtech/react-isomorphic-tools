@@ -20,10 +20,10 @@ class AuthClass {
     // getters/setters
 
     setToken = (token, options = {}) => {
-        const remove = !!token;
-        remove ?
-            cookie.remove(this.tokenName, options) :
-            cookie.save(this.tokenName, this.token, options)
+        const save = !!token;
+        save ?
+            cookie.save(this.tokenName, this.token, options) :
+            cookie.remove(this.tokenName, options)
     }
 
     getToken = () => {
@@ -31,10 +31,10 @@ class AuthClass {
     }
 
     setRefreshToken = (refreshToken, options = {}) => {
-        const remove = !!refreshToken;
-        remove ?
-            cookie.remove(this.refreshTokenName, options) :
-            cookie.save(this.refreshTokenName, refreshToken)
+        const save = !!refreshToken;
+        save ?
+            cookie.save(this.refreshTokenName, refreshToken) :
+            cookie.remove(this.refreshTokenName, options)
     }
 
     getRefreshToken = () => {
