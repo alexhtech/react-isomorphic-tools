@@ -22,7 +22,7 @@ class AuthClass {
     setToken = (token, options = {}) => {
         const save = !!token;
         save ?
-            cookie.save(this.tokenName, this.token, options) :
+            cookie.save(this.tokenName, token, options) :
             cookie.remove(this.tokenName, options)
     }
 
