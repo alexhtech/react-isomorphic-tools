@@ -31,7 +31,8 @@ const loadData = async({foundRoutes, store, location}) => {
                         redirect: (props)=> {
                             throw {
                                 code: 303,
-                                to: props
+                                to: props,
+                                type: 'redirect'
                             }
                         }
                     }, props)
