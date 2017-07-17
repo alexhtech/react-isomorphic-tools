@@ -15,7 +15,8 @@ class FetcherClass {
     async fetcher(url, {params, queryParams = {}, type = null, baseUrl = this.getBaseUrl(), method = 'GET', customHeaders = false} = {}) {
         if (type == 'form-data') {
             this.setHeadersData({})
-            this.setBody(params)
+            this.setPlainBody(params)
+            this.setQuery(queryParams)
         } else {
             this.setHeadersData({
                 'Accept': 'application/json',
@@ -154,6 +155,10 @@ class FetcherClass {
 
     setBody = (body) => {
         this.body = body ? JSON.stringify(body) : undefined
+    }
+
+    setPlainBody = body => {
+        this.body = body
     }
 
     getBody = () => {
