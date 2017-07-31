@@ -22,7 +22,7 @@ export {
     fetcher,
     setBaseUrl,
     resolveRoutes,
-    routes
+    routes,
     Link,
     NavLink,
     open as openModal,
