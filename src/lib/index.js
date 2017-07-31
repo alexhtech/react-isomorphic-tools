@@ -1,7 +1,7 @@
 import AuthClass from './AuthClass'
 import FetcherClass from './Fetcher/FetcherClass'
 import FetchToStateClass from './Fetcher/FetchToStateClass'
-import resolveRoutes from './resolveRoutes'
+import resolveRoutes, {routes} from './resolveRoutes'
 import Link from './Link'
 import NavLink from './NavLink'
 import {open, close, closeAll} from '../actions/modals'
@@ -22,6 +22,7 @@ export {
     fetcher,
     setBaseUrl,
     resolveRoutes,
+    routes
     Link,
     NavLink,
     open as openModal,

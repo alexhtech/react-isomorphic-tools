@@ -24,3 +24,8 @@ const resolveRoutes = async({routes, location, store}) => {
 
 
 export default resolveRoutes
+
+export {
+    resolveRoutes as default,
+    resolvedRoutes as routes
+}
