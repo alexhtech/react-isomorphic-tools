@@ -169,7 +169,7 @@ class FetcherClass {
     }
 
     setQuery = (params) => {
-        this.query = qs.stringify(params)
+        this.query = qs.stringify(params, {addQueryPrefix: true})
     }
 
     getQuery = () => {

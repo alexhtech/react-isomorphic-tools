@@ -34,8 +34,7 @@ export default class NavLinkWrapper extends React.Component {
 
         if (typeof this.props.to == 'object') {
             let {query, ...location} = this.props.to
-            const string = stringify(query)
-            to = {...location, search: string.length != 0 ? '?' + string : ''}
+            to = {...location, search: stringify(query, {addQueryPrefix: true})}
         } else {
             to = {pathname: this.props.to}
         }
@@ -56,7 +55,7 @@ export default class NavLinkWrapper extends React.Component {
         return (
             <NavLink
                 onClick={this.handleClick}
-                to={{...to, search: query ? '?' + stringify(query) : undefined}}
+                to={{...to, search: stringify(query, {addQueryPrefix: true})}}
                 replace={replace}
                 exact={exact}
                 strict={strict}

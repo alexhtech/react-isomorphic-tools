@@ -8,7 +8,7 @@ import Link from '../lib/Link'
 export default class Error extends React.Component {
     constructor(props) {
         super(props);
-        const {errorData} = qs.parse(props.location.search)
+        const {errorData} = qs.parse(props.location.search, {ignoreQueryPrefix: true})
         this.error = isJSON(errorData) ? JSON.parse(errorData) : ''
     }
 

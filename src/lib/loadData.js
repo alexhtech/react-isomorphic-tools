@@ -25,7 +25,7 @@ const loadData = async({foundRoutes, store, location}) => {
                         getState,
                         dispatch,
                         params,
-                        location: {...location, query: parse(location.search)},
+                        location: {...location, query: parse(location.search, {ignoreQueryPrefix: true})},
                         fetcher,
                         fetchToState: (url, params)=>dispatch(fetchToState(url, params)),
                         redirect: (props)=> {

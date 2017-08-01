@@ -28,17 +28,20 @@ export default class LinkWrapper extends React.Component {
         store: PropTypes.object.isRequired,
     }
 
-    handleClick = (e) => {
-        e.preventDefault()
-        let to
+    parse = (to) => {
 
-        if (typeof this.props.to == 'object') {
-            let {query, ...location} = this.props.to
-            const string = stringify(query)
-            to = {...location, search: string.length != 0 ? '?' + string : ''}
+        if (typeof to == 'object') {
+            let {query, ...location} = to
+            return {...location, search: stringify(query, {addQueryPrefix: true})}
         } else {
-            to = {pathname: this.props.to}
+            return {pathname: to}
         }
+    }
+
+    handleClick = (e) => {
+        e.preventDefault();
+
+        const to = this.parse(this.props.to)
 
         !this.lock && resolveRoutes({location: to, store: this.context.store}).then(()=> {
             this.lock = false
@@ -53,10 +56,10 @@ export default class LinkWrapper extends React.Component {
 
 
     render() {
-        const {to:{query, ...to}, children, style, className} = this.props
+        const {children, style, className} = this.props
+        const to = this.parse(this.props.to)
         return (
-            <Link onClick={this.handleClick} to={{...to, search: query ? '?' + stringify(query) : undefined}}
-                  children={children} style={style} className={className}/>
+            <Link onClick={this.handleClick} to={to} children={children} style={style} className={className}/>
         )
     }
 }
