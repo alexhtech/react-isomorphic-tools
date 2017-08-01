@@ -1,6 +1,6 @@
 import React from 'react'
 import isJSON from 'is-json'
-import queryString from 'query-string'
+import qs from 'qs'
 import styled from 'styled-components'
 import JSONPretty from 'react-json-pretty'
 import Link from '../lib/Link'
@@ -8,7 +8,7 @@ import Link from '../lib/Link'
 export default class Error extends React.Component {
     constructor(props) {
         super(props);
-        const {errorData} = queryString.parse(props.location.search)
+        const {errorData} = qs.parse(props.location.search)
         this.error = isJSON(errorData) ? JSON.parse(errorData) : ''
     }
 

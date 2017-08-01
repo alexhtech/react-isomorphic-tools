@@ -1,7 +1,7 @@
 import 'isomorphic-fetch'
 import 'es6-promise'
 import isJSON from 'is-json'
-import {stringifyParamsToQuery} from './utils'
+import qs from 'qs'
 
 class FetcherClass {
     constructor(Auth) {
@@ -24,11 +24,6 @@ class FetcherClass {
             })
             switch (method) {
                 case 'GET': {
-                    this.setQuery(params)
-                    this.setBody('')
-                }
-                    break
-                case 'DELETE': {
                     this.setQuery(params)
                     this.setBody('')
                 }
@@ -174,7 +169,7 @@ class FetcherClass {
     }
 
     setQuery = (params) => {
-        this.query = stringifyParamsToQuery(params)
+        this.query = qs.stringify(params)
     }
 
     getQuery = () => {
