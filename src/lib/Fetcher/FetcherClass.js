@@ -117,11 +117,14 @@ class FetcherClass {
                 }
                 throw error
             }
-            if (data.headers.get('content-type').indexOf((item)=>item == 'application/json') != -1) {
+
+            const contentType = data.headers.get('content-type')
+
+            if (contentType && contentType.indexOf((item)=>item == 'application/json') != -1) {
                 return await data.json()
             }
-            return await data.text()
 
+            return await data.text()
 
         } catch (e) {
             throw {
