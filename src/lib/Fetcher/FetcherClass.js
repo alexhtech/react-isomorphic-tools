@@ -54,7 +54,7 @@ class FetcherClass {
             })
 
             if (data.status >= 400) {
-                if (data.headers.get('content-type').indexOf((item)=>item == 'application/json') != -1) {
+                if (data.headers.get('content-type').indexOf('application/json') != -1) {
                     error = await data.json()
                 } else {
                     error = await data.text()
@@ -120,7 +120,7 @@ class FetcherClass {
 
             const contentType = data.headers.get('content-type')
 
-            if (contentType && contentType.indexOf((item)=>item == 'application/json') != -1) {
+            if (contentType && contentType.indexOf('application/json') != -1) {
                 return await data.json()
             }
 
