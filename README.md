@@ -25,7 +25,7 @@ and that they are also can design auxiliary library is better.
 
 ### Boilerplate ###
 
-[react-isomorphic-example.k-3soft.com](http://react-isomorphic-example.k-3soft.com)
+[https://github.com/aleksdp/react-isomorphic-example](https://github.com/aleksdp/react-isomorphic-example)
 
 ### Descriptions
 
