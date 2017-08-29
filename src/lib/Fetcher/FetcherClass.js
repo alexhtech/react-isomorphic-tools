@@ -49,11 +49,12 @@ class FetcherClass {
                 method,
                 headers: customHeaders || headers,
                 body,
-                mode: 'cors'
+                mode: 'cors',
+                credentials: 'same-origin'
             })
 
             if (data.status >= 400) {
-                if (data.headers.get('content-type').indexOf((item)=>item == 'application/json') != -1) {
+                if (data.headers.get('content-type').indexOf('application/json') != -1) {
                     error = await data.json()
                 } else {
                     error = await data.text()
@@ -63,7 +64,8 @@ class FetcherClass {
                     if (refreshToken) {
                         const refresh = await fetch(`${baseUrl}/token/refresh`, {
                             method: 'POST',
-                            body: JSON.stringify({refreshToken: refreshToken})
+                            body: JSON.stringify({refreshToken: refreshToken}),
+                            credentials: 'same-origin'
                         })
                         const response = await refresh.json()
                         const {token, refreshToken} = response
@@ -74,7 +76,8 @@ class FetcherClass {
                                 method: method,
                                 headers: this.getHeadersData(),
                                 body: body,
-                                mode: 'cors'
+                                mode: 'cors',
+                                credentials: 'same-origin'
                             })
                             const response = await data.json()
                             if (data.status == 401) {
@@ -89,7 +92,8 @@ class FetcherClass {
                                 method: method,
                                 headers: this.getHeadersData(),
                                 body: body,
-                                mode: 'cors'
+                                mode: 'cors',
+                                credentials: 'same-origin'
                             })
                             return await data.json()
                         }
@@ -101,7 +105,8 @@ class FetcherClass {
                             method,
                             headers: this.getHeadersData(),
                             body: body,
-                            mode: 'cors'
+                            mode: 'cors',
+                            credentials: 'same-origin'
                         })
                         const response = await data.json()
                         if (data.status == 401) {
@@ -112,8 +117,14 @@ class FetcherClass {
                 }
                 throw error
             }
-            return await data.json()
 
+            const contentType = data.headers.get('content-type')
+
+            if (contentType && contentType.indexOf('application/json') != -1) {
+                return await data.json()
+            }
+
+            return await data.text()
 
         } catch (e) {
             throw {
