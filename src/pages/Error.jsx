@@ -34,7 +34,7 @@ const Wrapper = styled.div`
 `
 
 const ErrorBlock = styled.div`
-    text-align: left
+    text-align: left;
 `
 
 const ErrorText = styled.div`

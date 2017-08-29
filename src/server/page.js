@@ -2,7 +2,7 @@ import serialize from 'serialize-javascript'
 
 const isDev = process.env.NODE_ENV == 'development'
 
-export default ({store, helmet, html = '', css = '', resolved = []})=> {
+export default ({store, helmet, html = '', css = '', resolved = [], config})=> {
     return (`
         <!DOCTYPE html>
         <html ${helmet.htmlAttributes.toString()}>
@@ -17,6 +17,7 @@ export default ({store, helmet, html = '', css = '', resolved = []})=> {
                 <script charSet="UTF-8">
                     window.__data=${serialize(store.getState())};
                     window.__REACT_ISOMORPHIC_TOOLS_RESOLVED_ROUTES=${serialize(resolved)};
+                    config = ${serialize(config)};
                 </script>
                 <script src="${isDev ? 'http://127.0.0.1:3001' : ''}/public/bundle.js"></script>
             </body>
