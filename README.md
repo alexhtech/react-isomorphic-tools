@@ -1,12 +1,12 @@
-### Motivation ###
-The first thing of motivation to make this library is an idea to gather together all
+## Motivation ##
+The first thing of motivation to make this library it was an idea to gather together all
 features what my team is used in projects that we was designed in that time. 
 The second thing it is that what I wanted to make just open source library 
 to help people to decide own problems with which I faced. The third thing 
-it is that I want grow up, and I want to involve more people to this project 
+it is that I wanted to grow up, and I wanted to involve more people to this project 
 and that they are also can design auxiliary library is better.
 
-### Functionality ###
+## Functionality ##
 
 * - Load data 
   * - [x] before transition in Client Side
@@ -23,13 +23,13 @@ and that they are also can design auxiliary library is better.
   * - [x] If application has an error before transition you will redirect to error page with detail info about the error
   * - [x] The same for server side, you just will redirect by expressjs to another route for detail info about error
 
-### Boilerplate ###
+## Boilerplate ##
 
 [https://github.com/aleksdp/react-isomorphic-example](https://github.com/aleksdp/react-isomorphic-example)
 
-### Descriptions
+## Descriptions
 
-#### reducers
+### reducers
 
 - authentication
 - fetchData
@@ -44,9 +44,28 @@ and that they are also can design auxiliary library is better.
 
 > Modals - it is common reducer to store data about opening or closing modals window
 
-#### actions
 
-##### Authorization
+### settings
+
+You can define baseUrl, locale, userAgent like this:
+
+```js
+import {
+    setBaseUrl,
+    setLocale,
+    setUserAgent
+} from 'react-isomorphic-tools'
+
+
+setBaseUrl('http://github.com/api')
+setLocale('en')
+setUserAgent(req.headers.get('user-agent'))
+
+```
+
+### actions
+
+#### Authorization
 
 
 ```js
@@ -75,7 +94,7 @@ const logout = () => dispatch => {
 }
 ```
 
-##### Navigator
+#### Navigator
 
 ```js
 import {setLocale, setUserAgent} from 'react-isomorphic-tools'
@@ -83,8 +102,7 @@ import {setLocale, setUserAgent} from 'react-isomorphic-tools'
 //you can use it something like this
 
 const defaultLocale = 'en'
-const userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36
-'
+const userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36'
 
 store.dispatch(setLocale(defaultLocale))
 store.dispatch(setUserAgent(userAgent))
@@ -92,12 +110,12 @@ store.dispatch(setUserAgent(userAgent))
 
 > It's more neccessary for server side rendering to define locale and userAgent that rendering will properly
 
-##### Modals
+#### Modals
 
 ```js
 import {openModal, closeModal, closeAllModals} from 'react-isomorphic-tools'
 
-const open = () => dispatch {
+const open = () => dispatch => {
   dispatch(openModal('test'))
 }
 
@@ -110,7 +128,7 @@ const closeAll = () => dispatch => {
 }
 ```
 
-##### Preload actions (fethcData reducer)
+#### Preload actions (fetchData reducer)
 
 > There are two options how to use fetchData
 
@@ -150,11 +168,11 @@ const fetchItems = async (userId) => dispatch => {
     
   try{
     
-    request({key, request {params: object.params, url}})
+    request({key, request: {params: object.params, url}})
     
-    const posts = fetcher(url, object)) // will return promise
+    const posts = fetcher(url, object) // will return promise
     
-    success({key, request {params: object.params, url}, response: posts})
+    success({key, request: {params: object.params, url}, response: posts})
     
   }
   catch(e){
@@ -176,14 +194,64 @@ import React from 'react'
 import {connect} from 'react-redux'
 
 @connect(state=>({
-  posts: state.fetchData.posts && state.fetchData.posts.response || [] // you can subscribe to only response or...
-  postsObject: state.fetchData.posts || {} // subscribe to whole object, it includes response and request object
-})
-exoport default class PostsContainer extends React.Component {
+  posts: state.fetchData.posts && state.fetchData.posts.response,  // you can subscribe to only response or...
+  postsObject: state.fetchData.posts  // subscribe to whole object, it includes response and request object
+}))
+export default class PostsContainer extends React.Component {
   render(){
     console.log(this.props.posts)
     console.log(this.props.postsObject)
-    return return null
+    return null
   }
 }
 ```
+
+### fetcher && fetchToState
+
+
+```js
+import {fetcher} from 'react-isomorphic-tools'
+
+
+fetcher('/posts', {
+    method: 'GET', // name of method,
+    params: { // will stringify by `qs` library only 
+      filters: {
+          eq: 'freshly'
+      }
+    }
+})
+
+
+```
+
+```js
+fetcher(url, options)
+```
+
+
+* options.params: object will stringify and attached to request body. Only for method GET it will attached to query string with `qs` library
+* options.queryParams: object will stringify with `qs` library and attached to query string for all method except GET method 
+* options.type: null || form-data - default null, if defined form-data You can attach form data object to params it will attach directly instead of stringify to string
+* options.baseUrl: string custom rewrite baseUrl for request
+* options.method: string in APPERCASE || 'GET' - default
+* options.customHeaders: object || default it uses internal object of header that includes authorization token
+* options.key = string || 'undefined' - default // only for `fetchToState`
+
+### Link & NavLink
+
+```js
+import {Link, NavLink} from 'react-isomorphic-tools'
+
+const component = () => {
+    return (
+        <div>
+            <Link {...props}/>
+            <NavLink {...props}/>
+        </div>
+    )
+}
+```
+
+* props - the same that defined for react-router v4 with some changes
+* props.to.query: object will stringify with `qs` library and attach to `to.search :object`
