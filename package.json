@@ -1,6 +1,6 @@
 {
   "name": "react-isomorphic-tools",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Authorization, Fetcher, Preload. Tools for ServerSide rendering",
   "main": "lib/index.js",
   "devDependencies": {

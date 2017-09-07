@@ -22,7 +22,7 @@ class FetcherClass {
             this.setHeadersData({
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'cookie': this.getCookieData()
+                'cookie': this.getCookiesData()
             })
             switch (method) {
                 case 'GET': {
@@ -189,7 +189,7 @@ class FetcherClass {
         return this.query
     }
 
-    getCookieData = () => {
+    getCookiesData = () => {
         const cookies = select()
         let string = ''
         for (let i in cookies) {
