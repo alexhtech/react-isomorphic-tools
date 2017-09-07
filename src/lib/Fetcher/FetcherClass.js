@@ -2,6 +2,7 @@ import 'isomorphic-fetch'
 import 'es6-promise'
 import isJSON from 'is-json'
 import qs from 'qs'
+import {select} from 'react-cookie'
 
 class FetcherClass {
     constructor(Auth) {
@@ -20,7 +21,8 @@ class FetcherClass {
         } else {
             this.setHeadersData({
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'cookie': this.getCookieData()
             })
             switch (method) {
                 case 'GET': {
@@ -185,6 +187,17 @@ class FetcherClass {
 
     getQuery = () => {
         return this.query
+    }
+
+    getCookieData = () => {
+        const cookies = select()
+        let string = ''
+        for (let i in cookies) {
+            if (Object.prototype.hasOwnProperty.call(cookies, i)) {
+                string += `${i}=${cookies[i]}; `
+            }
+        }
+        return string
     }
 }
 
