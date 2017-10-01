@@ -1,4 +1,4 @@
-import {FETCH_TO_STATE_REQUEST, FETCH_TO_STATE_SUCCESS, FETCH_TO_STATE_FAIL} from '../constants'
+import {FETCH_TO_STATE_REQUEST, FETCH_TO_STATE_SUCCESS, FETCH_TO_STATE_FAIL, FETCH_TO_STATE_CLEAR} from '../constants'
 
 const fetchData = (state = {}, action) => {
     switch (action.type) {
@@ -30,6 +30,21 @@ const fetchData = (state = {}, action) => {
                     isFetched: false,
                 }
             }
+
+        case FETCH_TO_STATE_CLEAR: {
+            const {meta} = action
+            if (Array.isArray(meta)) {
+                return {
+                    ...state, ...meta.reduce((acc, cur) => {
+                        acc[cur] = undefined;
+                        return acc;
+                    }, {})
+                }
+            } else {
+                return {...state, [meta]: undefined}
+            }
+        }
+
         default:
             return state
     }
