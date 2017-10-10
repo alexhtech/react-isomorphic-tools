@@ -1,0 +1,12 @@
+{
+    "preset": "airbnb",
+    "requireSemicolons": false,
+    "requireSpacesInsideImportedObjectBraces": false,
+    "requireSpacesInsideObjectBrackets": false,
+    "disallowMultipleLineBreaks": false,
+    "requireTrailingComma": false,
+    "validateIndentation": false,
+    "disallowTrailingWhitespace": false,
+    "requireLineFeedAtFileEnd": false,
+    "maximumLineLength": 150
+}
