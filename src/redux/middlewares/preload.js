@@ -32,7 +32,6 @@ export default (history, resolver) => store => next => action => {
                 next(action)
                 lock = false
             } else {
-                console.log('resolving by middleware')
                 resolver.resolve(history.location).then(() => {
                     next(action)
                 }).catch((e) => {

@@ -4,14 +4,11 @@ import lodash from 'lodash'
 
 
 class AbstractResolver {
-    constructor(routes, location, resolved) {
+    constructor(routes, resolved) {
         this.routes = routes
-        this.location = location
         this.resolved = resolved
         this.match = []
     }
-
-    getLocation = () => this.location
 
     getRoutes = () => this.routes
 
@@ -19,7 +16,7 @@ class AbstractResolver {
 
     resolveChunks = async (location) => {
         const matched = []
-        const {pathname} = location || this.getLocation()
+        const {pathname} = location
         matchRoutes(this.routes, pathname).forEach((item) => {
             if (!item.route.component && typeof item.route.getComponent === 'function') {
                 matched.push(item)
@@ -51,7 +48,6 @@ class AbstractResolver {
                 }
 
                 if (alwaysReload) return false
-                console.log(search, item.search)
                 return (reloadOnParamsChange ? lodash.isEqual(item.params, params) : true) &&
                     (reloadOnQueryChange ? search === item.search : true)
             }

@@ -2,9 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 
-class Resolver extends React.PureComponent {
+class Resolver extends React.Component {
     static propTypes = {
         resolver: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired,
         children: PropTypes.element.isRequired
     }
     static childContextTypes = {
@@ -18,6 +19,20 @@ class Resolver extends React.PureComponent {
 
     getChildContext() {
         return {resolver: this.resolver}
+    }
+
+    componentDidMount() {
+        const {history} = this.props
+        this.unsubscribeFromHistory = history.listen(this.handleLocationChange)
+    }
+
+    componentWillUnmount() {
+        if (this.unsubscribeFromHistory) this.unsubscribeFromHistory()
+    }
+
+    handleLocationChange = () => {
+        const {resolver, history} = this.props
+        resolver.resolve(history.location)
     }
 
     render() {

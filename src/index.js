@@ -1,41 +1,53 @@
-import Settings from './Settings'
-import Fetcher from './Data/Fetcher'
-
-
 import ReduxResolver from './Resolver/ReduxResolver'
-
-
-export {ReduxResolver}
 import Resolver from './Resolver/Provider'
-
-
-export {Resolver}
 import {fetchToState} from './redux'
-
-
-export {fetchToState}
 import page from './server/page'
+import Link from './Link'
+import NavLink from './NavLink'
+import {
+    isAuthenticated,
+    logout,
+    setToken,
+    getToken,
+    setRefreshToken,
+    getRefreshToken,
+    setTokenName,
+    setRefreshTokenName,
+    setTokenPrefix,
+    getTokenPrefix,
+    setBaseUrl,
+    getBaseUrl,
+} from './utils/settings'
+
+import {
+    getCookiesData,
+    stringifyQuery,
+    parseQuery,
+    fetcher
+} from './utils/fetcher'
 
 
-export {page}
-
-export const {
-  isAuthenticated,
-  logout,
-  setToken,
-  getToken,
-  setRefreshToken,
-  getRefreshToken,
-  setTokenName,
-  setRefreshTokenName,
-  setTokenPrefix,
-  getTokenPrefix,
-  setBaseUrl,
-  getBaseUrl
-} = new Settings()
-export const {
-  getCookiesData,
-  stringifyQuery,
-  parseQuery,
-  fetcher
-} = new Fetcher()
+export {
+    ReduxResolver,
+    Resolver,
+    fetchToState,
+    page,
+    Link,
+    NavLink,
+    isAuthenticated,
+    logout,
+    setToken,
+    getToken,
+    setRefreshToken,
+    getRefreshToken,
+    setTokenName,
+    setRefreshTokenName,
+    setTokenPrefix,
+    getTokenPrefix,
+    setBaseUrl,
+    getBaseUrl,
+    getCookiesData,
+    stringifyQuery,
+    parseQuery,
+    fetcher
+}

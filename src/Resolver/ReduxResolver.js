@@ -7,15 +7,12 @@ import {parseQuery} from '../'
 
 
 class ReduxResolver extends AbstractResolver {
-    constructor(routes, location, resolved = []) {
-        super(routes, location, resolved);
-    }
-
-    setStore = store => {
+    constructor(routes, store, resolved = []) {
+        super(routes, resolved);
         this.store = store
     }
 
-    resolveData = async (location = this.getLocation()) => {
+    resolveData = async (location) => {
         const {getState, dispatch} = this.store
         const {fetchToState, fetcher} = new FetchToState()
         const {pathname, search = ''} = location
@@ -39,11 +36,11 @@ class ReduxResolver extends AbstractResolver {
                     fetcher,
                     fetchToState: (...args) => dispatch(fetchToState(...args)),
                     redirect: (props) => {
-                        throw new Error({
+                        throw {
                             code: 303,
                             to: props,
                             type: 'redirect'
-                        })
+                        }
                     }
                 })
 

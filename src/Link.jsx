@@ -55,13 +55,16 @@ class Link extends React.Component {
             event.preventDefault()
 
             const {history} = this.context.router
+            const {resolve} = this.context.resolver
+
             const {to} = this.props
-            this.context.resolver.resolve(this.normalizeTo(to)).then(() => {
+            const location = this.normalizeTo(to)
+            resolve(location).then(() => {
                 const {replace} = this.props
                 if (replace) {
-                    history.replace(to)
+                    history.replace(location)
                 } else {
-                    history.push(to)
+                    history.push(location)
                 }
             })
         }

@@ -4,7 +4,7 @@ import qs from 'qs'
 import {select} from 'react-cookie'
 import {
     getBaseUrl, isAuthenticated, getToken, getTokenPrefix
-} from '../'
+} from '../utils/settings'
 
 
 class Fetcher {
@@ -40,9 +40,7 @@ class Fetcher {
                 })
                 break;
             default:
-                throw new Error({
-                    error: `Type '${type}' - is not supported in Fetcher`
-                })
+                throw new Error(`Type '${type}' - is not supported in the Fetcher`)
         }
 
         if (isAuthenticated()) {
@@ -64,7 +62,7 @@ class Fetcher {
 
             return await data.text()
         } catch (e) {
-            throw new Error({
+            throw {
                 type: 'notAvailableResource',
                 params: {
                     method,
@@ -73,7 +71,7 @@ class Fetcher {
                     params
                 },
                 e
-            })
+            }
         }
     }
 
