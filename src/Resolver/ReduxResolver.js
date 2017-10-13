@@ -7,9 +7,16 @@ import {parseQuery} from '../'
 
 
 class ReduxResolver extends AbstractResolver {
-    constructor(routes, store, resolved = []) {
-        super(routes, resolved);
-        this.store = store
+    init = (routes, store, resolved) => {
+        if (!resolved) {
+            this.routes = routes
+            this.store = store
+            this.resolved = []
+        } else {
+            ReduxResolver.prototype.routes = routes
+            ReduxResolver.prototype.store = store
+            ReduxResolver.prototype.resolved = resolved
+        }
     }
 
     resolveData = async (location) => {

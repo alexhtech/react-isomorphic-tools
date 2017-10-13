@@ -24,24 +24,25 @@ class Fetcher {
         }
 
         let query = ''
-
-        switch (type) {
-            case 'form-data':
-                args.body = params
-                query = this.stringifyQuery(queryParams)
-                break;
-            case 'json':
+        if (type === 'form-data') {
+            args.body = params
+            query = this.stringifyQuery(queryParams)
+        } else if (type === 'json') {
+            if (method === 'GET') {
+                query = this.stringifyQuery(params)
+            } else {
                 args.body = JSON.stringify(params)
                 query = this.stringifyQuery(queryParams)
-                args.headers = new Headers({
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    cookie: this.getCookiesData()
-                })
-                break;
-            default:
-                throw new Error(`Type '${type}' - is not supported in the Fetcher`)
+            }
+            args.headers = new Headers({
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                cookie: this.getCookiesData()
+            })
+        } else {
+            throw new Error(`Type '${type}' - is not supported in the Fetcher`)
         }
+
 
         if (isAuthenticated()) {
             args.headers.set('Authorization', getTokenPrefix() + getToken())

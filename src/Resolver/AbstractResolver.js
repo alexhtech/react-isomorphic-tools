@@ -4,12 +4,6 @@ import lodash from 'lodash'
 
 
 class AbstractResolver {
-    constructor(routes, resolved) {
-        this.routes = routes
-        this.resolved = resolved
-        this.match = []
-    }
-
     getRoutes = () => this.routes
 
     getResolved = () => this.resolved
