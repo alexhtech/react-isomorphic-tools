@@ -8,19 +8,20 @@ import {
 
 
 class Fetcher {
-    fetcher = async (url, options = {}) => {
+    fetcher = (url, options = {}) => {
         const {
             params = {},
             queryParams = {},
             type = 'json',
             baseUrl = getBaseUrl(),
-            method = 'GET',
+            method = 'get',
             customHeaders = false
         } = options
 
         const args = {
             mode: 'cors',
-            credentials: 'same-origin'
+            credentials: 'same-origin',
+            method: method.toUpperCase()
         }
 
         let query = ''
@@ -28,7 +29,7 @@ class Fetcher {
             args.body = params
             query = this.stringifyQuery(queryParams)
         } else if (type === 'json') {
-            if (method === 'GET') {
+            if (args.method === 'GET' || args.method === 'DELETE') {
                 query = this.stringifyQuery(params)
             } else {
                 args.body = JSON.stringify(params)
@@ -52,28 +53,27 @@ class Fetcher {
             args.headers = customHeaders
         }
 
-        try {
-            const data = await fetch(baseUrl + url + query, args)
+        return new Promise((res, rej) => {
+            fetch(baseUrl + url + query, args)
+                .then(data => {
+                    const contentType = data.headers.get('content-type')
 
-            const contentType = data.headers.get('content-type')
-
-            if (contentType && contentType.indexOf('application/json') !== -1) {
-                return await data.json()
-            }
-
-            return await data.text()
-        } catch (e) {
-            throw {
-                type: 'notAvailableResource',
-                params: {
-                    method,
-                    baseUrl,
-                    url,
-                    params
-                },
-                e
-            }
-        }
+                    if (data.status >= 400) {
+                        if (contentType.indexOf('application/json') !== -1) {
+                            data.json().then(rej)
+                        } else {
+                            data.text().then(rej)
+                        }
+                    } else {
+                        if (contentType && contentType.indexOf('application/json') !== -1) {
+                            data.json().then(res)
+                        } else {
+                            data.text().then(res)
+                        }
+                    }
+                })
+                .catch(rej)
+        })
     }
 
     stringifyQuery = params => qs.stringify(params, {addQueryPrefix: true}) || ''

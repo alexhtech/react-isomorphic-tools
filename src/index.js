@@ -1,6 +1,5 @@
 import ReduxResolver from './Resolver/ReduxResolver'
 import Resolver from './Resolver/Provider'
-import {fetchToState} from './redux'
 import page from './server/page'
 import Link from './Link'
 import NavLink from './NavLink'
@@ -25,6 +24,9 @@ import {
     parseQuery,
     fetcher
 } from './utils/fetcher'
+
+
+import {fetchToState} from './redux'
 
 
 export {

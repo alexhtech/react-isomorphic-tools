@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import invariant from 'invariant'
 import {createLocation} from 'history'
-import {stringifyQuery} from './'
+import qs from 'qs'
 
 
 const isModifiedEvent = (event) =>
@@ -81,7 +81,7 @@ class Link extends React.Component {
         if (query) {
             return {
                 ...rest,
-                search: stringifyQuery(to.query)
+                search: qs.stringify(to.query, {addQueryPrefix: true})
             }
         }
 

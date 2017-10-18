@@ -1,6 +1,7 @@
 import isBrowser from 'is-browser'
 import {matchRoutes} from 'react-router-config'
 import lodash from 'lodash'
+import qs from 'qs'
 
 
 class AbstractResolver {
@@ -50,7 +51,7 @@ class AbstractResolver {
         }) !== -1
     }
 
-    push = (item) => {
+    pushItem = (item) => {
         const index = this.resolved.findIndex(i => i.path === item.path)
         if (index !== -1) {
             this.resolved[index] = item
@@ -60,6 +61,32 @@ class AbstractResolver {
     }
 
     resolve = (location) => Promise.all([this.resolveChunks(location), this.resolveData(location)])
+
+    makeLocation = (to) => {
+        if (typeof to === 'string') {
+            return {
+                pathname: to
+            }
+        } else {
+            return to
+        }
+    }
+
+    stringifyQuery = params => qs.stringify(params, {addQueryPrefix: true}) || ''
+
+    parseQuery = queryString => qs.parse(queryString, {ignoreQueryPrefix: true})
+
+    push = async to => {
+        const location = this.makeLocation(to)
+        await this.resolve(location)
+        this.history.push(location)
+    }
+
+    replace = async to => {
+        const location = this.makeLocation(to)
+        await this.resolve(location)
+        this.history.replace(location)
+    }
 }
 
 

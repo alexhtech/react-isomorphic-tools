@@ -1,20 +1,22 @@
 import isBrowser from 'is-browser'
 import {matchRoutes} from 'react-router-config'
+import {push, replace} from 'react-router-redux'
 import AbstractResolver from './AbstractResolver'
 import FetchToState from '../redux/FetchToState'
 import {start, success} from '../redux/actions/preload'
-import {parseQuery} from '../'
 
 
 class ReduxResolver extends AbstractResolver {
-    init = (routes, store, resolved) => {
+    init = (routes, store, history, resolved) => {
         if (!resolved) {
             this.routes = routes
             this.store = store
             this.resolved = []
+            this.history = history
         } else {
             ReduxResolver.prototype.routes = routes
             ReduxResolver.prototype.store = store
+            ReduxResolver.prototype.history = history
             ReduxResolver.prototype.resolved = resolved
         }
     }
@@ -39,7 +41,7 @@ class ReduxResolver extends AbstractResolver {
                     getState,
                     dispatch,
                     params,
-                    location: {...location, query: parseQuery(search)},
+                    location: {...location, query: this.parseQuery(search)},
                     fetcher,
                     fetchToState: (...args) => dispatch(fetchToState(...args)),
                     redirect: (props) => {
@@ -51,7 +53,7 @@ class ReduxResolver extends AbstractResolver {
                     }
                 })
 
-                this.push({
+                this.pushItem({
                     params,
                     path,
                     search,
