@@ -32,13 +32,6 @@ class Link extends React.Component {
     }
 
     static contextTypes = {
-        router: PropTypes.shape({
-            history: PropTypes.shape({
-                push: PropTypes.func.isRequired,
-                replace: PropTypes.func.isRequired,
-                createHref: PropTypes.func.isRequired
-            }).isRequired
-        }).isRequired,
         resolver: PropTypes.object.isRequired
     }
 
@@ -53,20 +46,13 @@ class Link extends React.Component {
             !isModifiedEvent(event) // ignore clicks with modifier keys
         ) {
             event.preventDefault()
-
-            const {history} = this.context.router
-            const {resolve} = this.context.resolver
-
-            const {to} = this.props
-            const location = this.normalizeTo(to)
-            resolve(location).then(() => {
-                const {replace} = this.props
-                if (replace) {
-                    history.replace(location)
-                } else {
-                    history.push(location)
-                }
-            })
+            const {resolver} = this.context
+            const {replace, to} = this.props
+            if (replace) {
+                resolver.replace(this.normalizeTo(to))
+            } else {
+                resolver.push(this.normalizeTo(to))
+            }
         }
     }
 
@@ -94,8 +80,8 @@ class Link extends React.Component {
         const {replace, to, innerRef, ...props} = this.props
 
         invariant(
-            this.context.router,
-            'You should not use <Link> outside a <Router>'
+            this.context.resolver,
+            'You should not use <Link> outside a <Resolver>'
         )
 
         const {history} = this.context.router

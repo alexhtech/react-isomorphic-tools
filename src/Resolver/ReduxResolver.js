@@ -47,7 +47,7 @@ class ReduxResolver extends AbstractResolver {
                     redirect: (props) => {
                         throw {
                             code: 303,
-                            to: props,
+                            to: this.makeLocation(props),
                             type: 'redirect'
                         }
                     }

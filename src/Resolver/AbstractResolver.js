@@ -78,8 +78,16 @@ class AbstractResolver {
 
     push = async to => {
         const location = this.makeLocation(to)
-        await this.resolve(location)
-        this.history.push(location)
+        try {
+            await this.resolve(location)
+            this.history.push(location)
+        } catch (exception) {
+            if (exception.code === 303) {
+                this.push(exception.to)
+            } else {
+                throw exception
+            }
+        }
     }
 
     replace = async to => {
