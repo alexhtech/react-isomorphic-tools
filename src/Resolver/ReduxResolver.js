@@ -1,7 +1,6 @@
 import isBrowser from 'is-browser'
 import {matchRoutes} from 'react-router-config'
 import AbstractResolver from './AbstractResolver'
-import FetchToState from '../redux/FetchToState'
 import {start, success, fail} from '../redux/actions/preload'
 
 
@@ -37,7 +36,6 @@ class ReduxResolver extends AbstractResolver {
 
     resolveData = async (location) => {
         const {getState, dispatch} = this.store
-        const {fetchToState, fetcher} = new FetchToState()
         const {pathname, search = ''} = location
 
         const branch = matchRoutes(this.routes, pathname).filter(item =>
@@ -57,8 +55,6 @@ class ReduxResolver extends AbstractResolver {
                     dispatch,
                     params,
                     location: {...location, query: this.parseQuery(search)},
-                    fetcher,
-                    fetchToState: (...args) => dispatch(fetchToState(...args)),
                     redirect: (props) => {
                         throw {
                             code: 303,
