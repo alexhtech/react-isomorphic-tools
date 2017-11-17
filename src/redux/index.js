@@ -12,3 +12,7 @@ export const {
 export const {
     fetchToState
 } = new FetchToState()
+
+export {
+    FetchToState
+}
