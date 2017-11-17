@@ -40,18 +40,19 @@ class ReduxResolver extends AbstractResolver {
         const {fetchToState, fetcher} = new FetchToState()
         const {pathname, search = ''} = location
 
-        const unResolved = matchRoutes(this.routes, pathname).filter(
-            item => typeof item.route.preload === 'function' && !this.isResolved(item, location)
+        const branch = matchRoutes(this.routes, pathname).filter(item =>
+            typeof item.route.preload === 'function' ||
+            typeof item.route.onEnter === 'function'
         )
 
-        if (unResolved.length === 0) return;
+        if (branch.length === 0) return;
 
         this.preloadStart()
 
-        for (const i in unResolved) {
-            if (Object.prototype.hasOwnProperty.call(unResolved, i)) {
-                const {match: {params}, route: {preload, path}} = unResolved[i]
-                await preload({
+        for (const i in branch) {
+            if (Object.prototype.hasOwnProperty.call(branch, i)) {
+                const {match: {params}, route: {preload, path, onEnter}} = branch[i]
+                const options = {
                     getState,
                     dispatch,
                     params,
@@ -65,7 +66,10 @@ class ReduxResolver extends AbstractResolver {
                             type: 'redirect'
                         }
                     }
-                })
+                }
+
+                onEnter && await onEnter(options)
+                preload && !this.isResolved(branch[i], location) && await preload(options)
 
                 this.pushItem({
                     params,

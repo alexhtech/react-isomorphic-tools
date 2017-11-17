@@ -28,6 +28,8 @@ import {
 
 import {fetchToState} from './redux'
 
+export {default as preload} from './Resolver/preload'
+export {default as onEnter} from './Resolver/onEnter'
 
 export {
     ReduxResolver,

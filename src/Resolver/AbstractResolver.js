@@ -9,17 +9,33 @@ class AbstractResolver {
 
     getResolved = () => this.resolved
 
+    initHelpers = (item) => {
+        const {preload, onEnter} = item.route.component
+        if (typeof (preload) === 'function' && item.route.preload !== preload) {
+            item.route.preload = preload
+        }
+        if (typeof (preloadOptions) === 'object' && item.route.preloadOptions !== preloadOptions) {
+            item.route.preloadOptions = preloadOptions
+        }
+        if (typeof (onEnter) === 'function' && item.route.onEnter !== onEnter) {
+            item.route.onEnter = onEnter
+        }
+    }
+
     resolveChunks = async (location) => {
         const matched = []
         const {pathname} = location
         matchRoutes(this.routes, pathname).forEach((item) => {
             if (!item.route.component && typeof item.route.getComponent === 'function') {
                 matched.push(item)
+            } else {
+                this.initHelpers(item)
             }
         })
         const components = await Promise.all(matched.map(item => item.route.getComponent()))
         components.forEach((item, index) => {
             matched[index].route.component = item.default
+            this.initHelpers(item)
         })
     }
 
