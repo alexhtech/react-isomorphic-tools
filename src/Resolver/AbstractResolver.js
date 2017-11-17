@@ -119,8 +119,8 @@ class AbstractResolver {
 
     isLock = () => AbstractResolver.prototype.locked
 
-    getManager = (type) => async to => {
-        if (this.isLock()) {
+    getManager = (type, force = false) => async to => {
+        if (!force && this.isLock()) {
             return
         }
         const location = this.makeLocation(to)
