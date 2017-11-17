@@ -1,4 +1,4 @@
-import {PRELOAD_START, PRELOAD_SUCCESS, PRELOAD_FAIL} from '../constants'
+import {PRELOAD_START, PRELOAD_SUCCESS, PRELOAD_FAIL} from '../../constants'
 
 
 const start = () => ({
@@ -10,13 +10,11 @@ const success = () => ({
     type: PRELOAD_SUCCESS
 })
 
-const fail = ({code = 303, to = '/error', ...rest}, location) => ({
+const fail = (e, location) => ({
     type: PRELOAD_FAIL,
     payload: {
-        code,
-        to,
-        location,
-        e: rest
+        e,
+        location
     }
 })
 

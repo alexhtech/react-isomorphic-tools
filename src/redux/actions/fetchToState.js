@@ -2,7 +2,7 @@ import {
     FETCH_TO_STATE_REQUEST,
     FETCH_TO_STATE_SUCCESS,
     FETCH_TO_STATE_FAIL
-} from '../constants'
+} from '../../constants'
 
 
 const request = ({key, request}) => dispatch =>

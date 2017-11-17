@@ -1,9 +1,8 @@
 import isBrowser from 'is-browser'
 import {matchRoutes} from 'react-router-config'
-import {push, replace} from 'react-router-redux'
 import AbstractResolver from './AbstractResolver'
 import FetchToState from '../redux/FetchToState'
-import {start, success} from '../redux/actions/preload'
+import {start, success, fail} from '../redux/actions/preload'
 
 
 class ReduxResolver extends AbstractResolver {
@@ -21,6 +20,21 @@ class ReduxResolver extends AbstractResolver {
         }
     }
 
+    preloadStart = () => {
+        const {dispatch} = this.store
+        dispatch(start())
+    }
+
+    preloadSuccess = () => {
+        const {dispatch} = this.store
+        dispatch(success())
+    }
+
+    preloadFail = (e, location) => {
+        const {dispatch} = this.store
+        dispatch(fail(e, location))
+    }
+
     resolveData = async (location) => {
         const {getState, dispatch} = this.store
         const {fetchToState, fetcher} = new FetchToState()
@@ -32,7 +46,7 @@ class ReduxResolver extends AbstractResolver {
 
         if (unResolved.length === 0) return;
 
-        dispatch(start())
+        this.preloadStart()
 
         for (const i in unResolved) {
             if (Object.prototype.hasOwnProperty.call(unResolved, i)) {
@@ -62,7 +76,7 @@ class ReduxResolver extends AbstractResolver {
             }
         }
 
-        dispatch(success())
+        this.preloadSuccess()
     }
 }
 

@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import {FETCH_TO_STATE_REQUEST, FETCH_TO_STATE_SUCCESS, FETCH_TO_STATE_FAIL} from '../../constants'
+import {FETCH_TO_STATE_REQUEST, FETCH_TO_STATE_SUCCESS, FETCH_TO_STATE_FAIL} from '../../../constants'
 
 const fetchData = (state = Immutable.fromJS({}), action) => {
     switch (action.type) {

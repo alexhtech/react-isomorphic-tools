@@ -3,7 +3,7 @@ import {
     FETCH_TO_STATE_SUCCESS,
     FETCH_TO_STATE_FAIL,
     FETCH_TO_STATE_CLEAR
-} from '../constants'
+} from '../../constants'
 
 
 const fetchData = (state = {}, action) => {

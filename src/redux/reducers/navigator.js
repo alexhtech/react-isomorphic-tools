@@ -1,4 +1,4 @@
-import {NAVIGATOR_SET_LOCALE, NAVIGATOR_SET_USER_AGENT} from '../constants'
+import {NAVIGATOR_SET_LOCALE, NAVIGATOR_SET_USER_AGENT} from '../../constants'
 
 
 const navigator = (state = {}, action) => {

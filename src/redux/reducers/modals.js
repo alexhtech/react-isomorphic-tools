@@ -1,4 +1,4 @@
-import {MODALS_OPEN, MODALS_CLOSE, MODALS_CLOSE_ALL} from '../constants'
+import {MODALS_OPEN, MODALS_CLOSE, MODALS_CLOSE_ALL} from '../../constants'
 
 
 const modals = (state = {}, action) => {

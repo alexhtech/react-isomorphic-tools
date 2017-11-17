@@ -1,6 +1,15 @@
 .idea
 /node_modules
 .DS_Store
-/dist
-!/dist/index.es.js
 /yarn.lock
+/commonjs
+/constants
+/Data
+/redux
+/Resolver
+/server
+/utils
+/index.js
+/Link.js
+/NavLink.js
+/Settings.js

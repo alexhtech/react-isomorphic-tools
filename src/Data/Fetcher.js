@@ -1,5 +1,3 @@
-import 'isomorphic-fetch'
-import 'es6-promise'
 import qs from 'qs'
 import {select} from 'react-cookie'
 import {
@@ -10,51 +8,68 @@ import {
 class Fetcher {
     fetcher = (url, options = {}) => {
         const {
-            params = {},
-            queryParams = {},
+            params,
+            queryParams,
             type = 'json',
             baseUrl = getBaseUrl(),
             method = 'get',
-            customHeaders = false
+            customHeaders = false,
+            query,
+            body
         } = options
 
         const args = {
             mode: 'cors',
             credentials: 'same-origin',
-            method: method.toUpperCase()
+            method: method.toUpperCase(),
+            headers: new Headers()
         }
 
-        let query = ''
+        let search = ''
         if (type === 'form-data') {
-            args.body = params
-            query = this.stringifyQuery(queryParams)
+            args.body = body
+            search = this.stringifyQuery(queryParams || query)
         } else if (type === 'json') {
-            if (args.method === 'GET' || args.method === 'DELETE') {
-                query = this.stringifyQuery(params)
+            if (args.method === 'GET') {
+                search = this.stringifyQuery(params || query)
+                if (body) {
+                    console.error('Warning: GET method doesn`t have a request body, you should use `query`')
+                }
             } else {
-                args.body = JSON.stringify(params)
-                query = this.stringifyQuery(queryParams)
+                if (params || body) {
+                    args.body = JSON.stringify(params || body)
+                }
+                if (queryParams || query) {
+                    search = this.stringifyQuery(queryParams || query)
+                }
             }
-            args.headers = new Headers({
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                cookie: this.getCookiesData()
-            })
+
+            args.headers.set('Accept', 'application/json')
+            args.headers.set('Content-Type', 'application/json')
+            args.headers.set('cookie', this.getCookiesData())
         } else {
             throw new Error(`Type '${type}' - is not supported in the Fetcher`)
         }
 
 
         if (isAuthenticated()) {
-            args.headers.set('Authorization', getTokenPrefix() + getToken())
+            args.headers.set('Authorization', `${getTokenPrefix()}${getToken()}`)
         }
 
         if (customHeaders) {
             args.headers = customHeaders
         }
 
+        if (params) {
+            console.warn('Deprecated: Using `params` is deprecated, you should use `body` for all methods except GET or `query`, instead')
+        }
+
+        if (queryParams) {
+            console.warn('Deprecated: Using `queryParams` is deprecated, you should use `query` for all methods instead')
+        }
+
         return new Promise((res, rej) => {
-            fetch(baseUrl + url + query, args)
+            fetch(baseUrl + url + search, args)
                 .then(data => {
                     const contentType = data.headers.get('content-type')
 

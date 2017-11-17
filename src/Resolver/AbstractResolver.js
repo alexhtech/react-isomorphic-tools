@@ -1,6 +1,6 @@
 import isBrowser from 'is-browser'
 import {matchRoutes} from 'react-router-config'
-import lodash from 'lodash'
+import shallowEqual from 'shallowequal'
 import qs from 'qs'
 
 
@@ -43,7 +43,7 @@ class AbstractResolver {
                 }
 
                 if (alwaysReload) return false
-                return (reloadOnParamsChange ? lodash.isEqual(item.params, params) : true) &&
+                return (reloadOnParamsChange ? shallowEqual(item.params, params) : true) &&
                     (reloadOnQueryChange ? search === item.search : true)
             }
 
@@ -62,6 +62,7 @@ class AbstractResolver {
 
     resolve = (location) => Promise.all([this.resolveChunks(location), this.resolveData(location)])
 
+
     makeLocation = (to) => {
         if (typeof to === 'string') {
             return {
@@ -76,25 +77,41 @@ class AbstractResolver {
 
     parseQuery = queryString => qs.parse(queryString, {ignoreQueryPrefix: true})
 
-    push = async to => {
+    lock = () => {
+        AbstractResolver.prototype.locked = true
+    }
+
+    unLock = () => {
+        AbstractResolver.prototype.locked = false
+    }
+
+    isLock = () => AbstractResolver.prototype.locked
+
+    getManager = (type) => async to => {
+        if (this.isLock()) {
+            return
+        }
         const location = this.makeLocation(to)
         try {
+            this.lock()
             await this.resolve(location)
-            this.history.push(location)
-        } catch (exception) {
-            if (exception.code === 303) {
-                this.push(exception.to)
+            this.history[type](location)
+        } catch (e) {
+            if (e.code === 303) {
+                this.unLock()
+                this.preloadSuccess()
+                this[type](e.to)
             } else {
-                throw exception
+                this.unLock()
+                this.preloadFail(e, location)
+                throw e
             }
         }
     }
 
-    replace = async to => {
-        const location = this.makeLocation(to)
-        await this.resolve(location)
-        this.history.replace(location)
-    }
+    push = this.getManager('push')
+
+    replace = this.getManager('replace')
 }
 
 

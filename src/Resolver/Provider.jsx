@@ -32,7 +32,7 @@ class Resolver extends React.Component {
 
     handleLocationChange = () => {
         const {resolver, history} = this.props
-        resolver.resolve(history.location)
+        resolver.isLock() ? resolver.unLock() : resolver.resolve(history.location)
     }
 
     render() {

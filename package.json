@@ -1,39 +1,44 @@
 {
-  "name": "react-isomorphic-tools",
-  "version": "3.0.0-alpha.23",
-  "description": "Authorization, Fetcher, Preload. Tools for ServerSide rendering",
-  "main": "./dist/index.js",
-  "module": "./dist/index.es.js",
-  "jsnext:main": "./dist/index.es.js",
-  "scripts": {
-    "build": "node_modules/babel-cli/bin/babel.js src --out-dir ./dist"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/aleksdp/react-isomorphic-tools.git"
-  },
-  "author": "Oleksii Olefirenko",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/aleksdp/react-isomorphic-tools/issues"
-  },
-  "peerDependencies": {
-    "react": "^15 || ^16",
-    "react-cookie": "1.0.5",
-    "react-router": "^4.2.0",
-    "react-router-config": "^1.0.0-beta.4",
-    "react-router-dom": "^4.2.2"
-  },
-  "dependencies": {
-    "is-browser": "^2.0.1",
-    "prop-types": "^15.6.0",
-    "qs": "^6.5.1",
-    "serialize-javascript": "^1.4.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1"
-  }
+    "name": "react-isomorphic-tools",
+    "version": "3.0.0",
+    "description": "Authorization, Fetcher, Preload. Tools for ServerSide rendering",
+    "main": "./index.js",
+    "module": "./index.es.js",
+    "jsnext:main": "./index.es.js",
+    "scripts": {
+        "build:es6": "cross-env NODE_ENV=es6 node_modules/babel-cli/bin/babel.js src --out-dir ./",
+        "build:commonjs": "cross-env NODE_ENV=commonjs node_modules/babel-cli/bin/babel.js src --out-dir ./commonjs",
+        "build": "npm run clean && npm run build:es6 && npm run build:commonjs",
+        "clean": "rm -rf ./commonjs ./constants ./Data ./redux ./Resolver ./server ./utils ./Link.js ./NavLink.js ./Settings.js ./index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/aleksdp/react-isomorphic-tools.git"
+    },
+    "author": "Oleksii Olefirenko",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/aleksdp/react-isomorphic-tools/issues"
+    },
+    "peerDependencies": {
+        "react": "^15 || ^16",
+        "react-cookie": "1.0.5",
+        "react-router": "^4.2.0",
+        "react-router-config": "^1.0.0-beta.4",
+        "react-router-dom": "^4.2.2"
+    },
+    "dependencies": {
+        "is-browser": "^2.0.1",
+        "prop-types": "^15.6.0",
+        "qs": "^6.5.1",
+        "serialize-javascript": "^1.4.0"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-plugin-transform-runtime": "^6.23.0",
+        "babel-preset-env": "^1.6.0",
+        "babel-preset-react": "^6.24.1",
+        "babel-preset-stage-2": "^6.24.1",
+        "cross-env": "^5.1.1"
+    }
 }

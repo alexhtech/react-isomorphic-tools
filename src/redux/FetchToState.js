@@ -3,19 +3,20 @@ import Fetcher from '../Data/Fetcher'
 
 
 class FetchToState extends Fetcher {
-    fetchToState = (url, {key = 'undefinedKey', params = {}, ...rest}) => async (dispatch) => {
+    fetchToState = (url, options) => async (dispatch) => {
+        const key = options.key || 'undefinedKey'
         try {
             dispatch(request({
                 key,
                 request: {
-                    ...rest, params, url
+                    url, options
                 }
             }))
             dispatch(success({
                 key,
-                response: await this.fetcher(url, {...rest, params}),
+                response: await this.fetcher(url, options),
                 request: {
-                    ...rest, params, url
+                    url, options
                 }
             }))
         } catch (e) {

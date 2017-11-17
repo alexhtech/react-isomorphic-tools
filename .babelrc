@@ -1,7 +1,29 @@
 {
-  "presets": [
-    "react",
-    "env",
-    "stage-2"
-  ]
+    "env": {
+        "commonjs": {
+            "presets": [
+                "react",
+                "env",
+                "stage-2"
+            ],
+            "plugins": [
+                "transform-runtime"
+            ]
+        },
+        "es6": {
+            "presets": [
+                "react",
+                [
+                    "env",
+                    {
+                        "modules": false
+                    }
+                ],
+                "stage-2"
+            ],
+            "plugins": [
+                "transform-runtime"
+            ]
+        }
+    }
 }

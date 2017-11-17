@@ -1,4 +1,4 @@
-import {AUTH_ACCOUNT_SUCCESS, AUTH_LOGIN_SUCCESS, AUTH_LOGOUT_SUCCESS} from '../constants'
+import {AUTH_ACCOUNT_SUCCESS, AUTH_LOGIN_SUCCESS, AUTH_LOGOUT_SUCCESS} from '../../constants'
 
 
 const authentication = (state = {}, action) => {
