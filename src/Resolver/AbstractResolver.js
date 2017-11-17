@@ -10,7 +10,7 @@ class AbstractResolver {
     getResolved = () => this.resolved
 
     initHelpers = (item) => {
-        const {preload, onEnter} = item.route.component
+        const {preload, onEnter, routes} = item.route.component
         if (typeof (preload) === 'function' && item.route.preload !== preload) {
             item.route.preload = preload
         }
@@ -19,6 +19,9 @@ class AbstractResolver {
         }
         if (typeof (onEnter) === 'function' && item.route.onEnter !== onEnter) {
             item.route.onEnter = onEnter
+        }
+        if (typeof routes === 'object' && item.route.routes !== routes) {
+            item.route.routes = routes
         }
     }
 
