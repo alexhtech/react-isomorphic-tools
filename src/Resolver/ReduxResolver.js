@@ -61,7 +61,8 @@ class ReduxResolver extends AbstractResolver {
                             to: this.makeLocation(props),
                             type: 'redirect'
                         }
-                    }
+                    },
+                    ...this.helpers
                 }
 
                 onEnter && await onEnter(options)

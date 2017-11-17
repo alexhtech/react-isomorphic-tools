@@ -10,6 +10,10 @@ class AbstractResolver {
 
     getResolved = () => this.resolved
 
+    setHelpers = (helpers) => {
+        this.helpers = helpers
+    }
+
     addHelper = (key, helper) => {
         this.helpers[key] = helper
     }
