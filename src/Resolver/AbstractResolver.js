@@ -5,7 +5,15 @@ import qs from 'qs'
 
 
 class AbstractResolver {
-    helpers = {}
+    constructor({helpers = {}, routes, resolved = [], history}) {
+        this.helpers = helpers
+        this.routes = routes
+        this.resolved = resolved
+        this.history = history
+        this.listeners = []
+        this.injectListener(history)
+    }
+
     getRoutes = () => this.routes
 
     getResolved = () => this.resolved
@@ -18,8 +26,33 @@ class AbstractResolver {
         this.helpers[key] = helper
     }
 
+    notifyListeners = async (...args) => {
+        try {
+            await this.resolve(args[0])
+            this.listeners.forEach(listener => listener(...args))
+        } catch (e) {
+            if (e.code === 303) {
+                this.preloadFail(e, location)
+                this.history.replace(e.to)
+            } else {
+                this.preloadFail(e, location)
+                this.history.goBack()
+            }
+        }
+    }
+
+    injectListener = ({listen}) => {
+        listen(this.notifyListeners)
+        this.history.listen = (listener) => {
+            this.listeners.push(listener)
+            return () => {
+                this.listeners = this.listeners.filter(item => item !== listener)
+            }
+        }
+    }
+
     injectOptionsFromComponent = (item) => {
-        const {preload, onEnter, routes} = item.route.component
+        const {preload, onEnter, routes, preloadOptions} = item.route.component
 
         if (typeof (preload) === 'function' && item.route.preload !== preload) {
             item.route.preload = preload
@@ -94,7 +127,6 @@ class AbstractResolver {
 
     resolve = (location) => Promise.all([this.resolveChunks(location), this.resolveData(location)])
 
-
     makeLocation = (to) => {
         if (typeof to === 'string') {
             return {
@@ -108,42 +140,6 @@ class AbstractResolver {
     stringifyQuery = params => qs.stringify(params, {addQueryPrefix: true}) || ''
 
     parseQuery = queryString => qs.parse(queryString, {ignoreQueryPrefix: true})
-
-    lock = () => {
-        AbstractResolver.prototype.locked = true
-    }
-
-    unLock = () => {
-        AbstractResolver.prototype.locked = false
-    }
-
-    isLock = () => AbstractResolver.prototype.locked
-
-    getManager = (type, force = false) => async to => {
-        if (!force && this.isLock()) {
-            return
-        }
-        const location = this.makeLocation(to)
-        try {
-            this.lock()
-            await this.resolve(location)
-            this.history[type](location)
-        } catch (e) {
-            if (e.code === 303) {
-                this.unLock()
-                this.preloadSuccess()
-                this[type](e.to)
-            } else {
-                this.unLock()
-                this.preloadFail(e, location)
-                throw e
-            }
-        }
-    }
-
-    push = this.getManager('push')
-
-    replace = this.getManager('replace')
 }
 
 

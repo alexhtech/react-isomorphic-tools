@@ -5,18 +5,9 @@ import {start, success, fail} from '../redux/actions/preload'
 
 
 class ReduxResolver extends AbstractResolver {
-    init = (routes, store, history, resolved) => {
-        if (!resolved) {
-            this.routes = routes
-            this.store = store
-            this.resolved = []
-            this.history = history
-        } else {
-            ReduxResolver.prototype.routes = routes
-            ReduxResolver.prototype.store = store
-            ReduxResolver.prototype.history = history
-            ReduxResolver.prototype.resolved = resolved
-        }
+    constructor({store, ...props}) {
+        super(props);
+        this.store = store
     }
 
     preloadStart = () => {
